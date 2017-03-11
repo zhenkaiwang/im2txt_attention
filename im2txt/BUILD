@@ -40,6 +40,7 @@ py_library(
         "//im2txt/ops:image_embedding",
         "//im2txt/ops:image_processing",
         "//im2txt/ops:inputs",
+        "//im2txt/ops:rnn_cell_ops",
     ],
 )
 

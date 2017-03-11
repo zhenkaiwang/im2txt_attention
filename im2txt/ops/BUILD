@@ -16,6 +16,12 @@ py_library(
     srcs_version = "PY2AND3",
 )
 
+py_library(
+    name = "rnn_cell_ops",
+    srcs = ["rnn_cell_ops.py"],
+    srcs_version = "PY2AND3",
+)
+
 py_test(
     name = "image_embedding_test",
     size = "small",
