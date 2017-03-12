@@ -351,18 +351,18 @@ class ShowAndTellModel(object):
         # inputs_wa = get_inputs(self.seq_embeddings,self.image_sub_features)
 
         sequence_length = tf.reduce_sum(self.input_mask, 1)
-        # lstm_outputs, _ = tf.nn.dynamic_rnn(cell=lstm_cell,
-        #                                     inputs=self.seq_embeddings,
-        #                                     sequence_length=sequence_length,
-        #                                     initial_state=initial_state,
-        #                                     dtype=tf.float32,
-        #                                     scope=lstm_scope)
-        lstm_outputs, _ = dynamic_rnn(cell=lstm_cell,
+        lstm_outputs, _ = tf.nn.dynamic_rnn(cell=lstm_cell,
                                             inputs=self.seq_embeddings,
                                             sequence_length=sequence_length,
                                             initial_state=initial_state,
                                             dtype=tf.float32,
-                                            scope=lstm_scope)        
+                                            scope=lstm_scope)
+        # lstm_outputs, _ = dynamic_rnn(cell=lstm_cell,
+        #                                     inputs=self.seq_embeddings,
+        #                                     sequence_length=sequence_length,
+        #                                     initial_state=initial_state,
+        #                                     dtype=tf.float32,
+        #                                     scope=lstm_scope)        
 
     # Stack batches vertically.
     lstm_outputs = tf.reshape(lstm_outputs, [-1, lstm_cell.output_size])
