@@ -308,8 +308,24 @@ class BasicLSTMCell(RNNCell):
         c, h = state
       else:
         c, h = array_ops.split(1, 2, state)
-      concat = _linear([inputs, h], 4 * self._num_units, True)
+      ## seperate inputs into word imbedding and image subfeatures
+      shape = net2.get_shape()
+      batch_size = shape[0].value
+      #padded_length = shape[1].value
+      single_input_length = shape[1].value
+      word_imbedding_length = 512;
+      subfeature_num = 17*17;#(single_input_length-word_imbedding_length)/subfeature_length;
+      subfeature_length = (single_input_length-word_imbedding_length)/subfeature_num;
+      word_imbedding=inputs[:,:,0:word_imbedding_length]
+      image_subfeatures=inputs[:,:,word_imbedding_length:end]
+      #net2 = tf.reshape(net2, [shape2[0].value, -1, shape2[3].value])
+      image_subfeatures=tf.reshape(image_subfeatures,[batch_size,subfeature_num,subfeature_length])
+      e_ti = f_att(image_subfeatures,h)
+      alpha_ti = softmax(e_ti)
+      z_i = get_z(image_subfeatures,alpha_ti)
 
+
+      concat = _linear([inputs, h, z_i], 4 * self._num_units, True)
       # i = input_gate, j = new_input, f = forget_gate, o = output_gate
       i, j, f, o = array_ops.split(1, 4, concat)
 
