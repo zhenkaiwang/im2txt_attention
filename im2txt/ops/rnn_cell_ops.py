@@ -302,14 +302,16 @@ class BasicLSTMCell(RNNCell):
   def output_size(self):
     return self._num_units
 
-  def f_att(image_subfeatures,subfeature_length,h)
+  def f_att(image_subfeatures,subfeature_length,h,scope)
     state_length = self._num_units
-    f_att_matrix = vs.get_variable(name="f_att_matrix",shape = (subfeature_length,state_length), initializer=tf.contrib.layers.xavier_initializer())
+    with vs.variable_scope(scope or "F_att"):
+      f_att_matrix = vs.get_variable(name="f_att_matrix",shape = (subfeature_length,state_length), initializer=tf.contrib.layers.xavier_initializer())
     e_ti = math_ops.matmul(math_ops.matmul(image_subfeatures,f_att_matrix),h)
     return e_ti
 
   def get_z(image_subfeatures,alpha_ti)
-    
+    z_i = math_ops.reduce_sum(math_ops.matmul(image_subfeatures,alpha_ti),axis=1)
+    return z_i
 
   def __call__(self, inputs, state, scope=None):
     """Long short-term memory cell (LSTM)."""
@@ -320,24 +322,22 @@ class BasicLSTMCell(RNNCell):
       else:
         c, h = array_ops.split(1, 2, state)
       ## seperate inputs into word imbedding and image subfeatures
-      '''
       shape = inputs.get_shape()
       batch_size = shape[0].value
       #padded_length = shape[1].value
       single_input_length = shape[1].value
       word_imbedding_length = 512;
-      subfeature_num = 17*17;#(single_input_length-word_imbedding_length)/subfeature_length;
+      subfeature_num = 14*14;#(single_input_length-word_imbedding_length)/subfeature_length;
       subfeature_length = (single_input_length-word_imbedding_length)/subfeature_num;
-      word_imbedding=inputs[:,:,0:word_imbedding_length]
-      image_subfeatures=inputs[:,:,word_imbedding_length:end]
+      word_imbedding=inputs[:,0:word_imbedding_length]
+      image_subfeatures=inputs[:,word_imbedding_length:single_input_length]
       #net2 = tf.reshape(net2, [shape2[0].value, -1, shape2[3].value])
       image_subfeatures=tf.reshape(image_subfeatures,[batch_size,subfeature_num,subfeature_length])
-      e_ti = f_att(image_subfeatures,h)
+      e_ti = f_att(image_subfeatures,h,scope)
       alpha_ti = nn_ops.softmax(e_ti)
       z_i = get_z(image_subfeatures,alpha_ti)
-      '''
 
-      concat = _linear([inputs, h], 4 * self._num_units, True)
+      concat = _linear([word_imbeddings, h, z_i], 4 * self._num_units, True)
       # i = input_gate, j = new_input, f = forget_gate, o = output_gate
       i, j, f, o = array_ops.split(1, 4, concat)
 
