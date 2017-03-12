@@ -105,8 +105,22 @@ class ShowAndTellModel(object):
   def get_inputs(self):
 	# self.image_sub_features [batch_size, sub_featrue_num, sub_feature_length]
 	# self.seq_embeddings [batch_size, padded_length, embedding_size]
-	batch_size, padded_length, embedding_size = tf.shape(self.seq_embeddings)
-	batch_size, sub_feature_num, sub_feature_length = tf.shape(self.image_sub_features)
+        '''
+        s=tf.Session()
+	s.run(tf.shape(self.seq_embeddings))
+        print(tf.shape(self.seq_embeddings)[0])
+        print(tf.shape(self.seq_embeddings)[1])
+        print(tf.shape(self.seq_embeddings)[2])
+        '''
+        size1=tf.shape(self.seq_embeddings)
+	batch_size=size1[0]
+        padded_length=size1[1]
+        embedding_size=size1[2]
+        size2=tf.shape(self.image_sub_features)
+        sub_feature_num=size2[1]
+        sub_feature_length=size2[2]
+	#batch_size, padded_length, embedding_size = tf.shape(self.seq_embeddings)
+	#batch_size, sub_feature_num, sub_feature_length = tf.shape(self.image_sub_features)
 	# generate RNN input: word feature + local features
 	output = tf.zeros([batch_size, padded_length, embedding_size + sub_feature_length * sub_feature_num], tf.float32)
 	
