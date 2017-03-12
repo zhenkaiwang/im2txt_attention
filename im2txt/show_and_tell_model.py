@@ -47,6 +47,8 @@ from im2txt.ops import rnn_cell_ops
 
 tf.nn.rnn_cell=rnn_cell_ops
 
+
+
 def dynamic_rnn(cell, inputs, sequence_length=None, initial_state=None,
                 dtype=None, parallel_iterations=None, swap_memory=False,
                 time_major=False, scope=None):
@@ -188,7 +190,7 @@ def dynamic_rnn(cell, inputs, sequence_length=None, initial_state=None,
 
     inputs = nest.pack_sequence_as(structure=inputs, flat_sequence=flat_input)
 
-    (outputs, final_state) = _dynamic_rnn_loop(
+    (outputs, final_state) = tf.nn.rnn._dynamic_rnn_loop(
         cell,
         inputs,
         state,
