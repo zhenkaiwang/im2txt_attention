@@ -30,6 +30,18 @@ from im2txt.ops import image_embedding
 from im2txt.ops import image_processing
 from im2txt.ops import inputs as input_ops
 #RNNCELL
+from tensorflow.python.util import nest
+from tensorflow.python.framework import constant_op
+from tensorflow.python.framework import dtypes
+from tensorflow.python.framework import ops
+from tensorflow.python.framework import tensor_shape
+from tensorflow.python.ops import array_ops
+from tensorflow.python.ops import control_flow_ops
+from tensorflow.python.ops import math_ops
+# from tensorflow.python.ops import rnn_cell
+from tensorflow.python.ops import tensor_array_ops
+from tensorflow.python.ops import variable_scope as vs
+from tensorflow.python.util import nest
 from im2txt.ops import rnn_cell_ops
 
 
