@@ -504,7 +504,7 @@ class ShowAndTellModel(object):
 
         # Run a single LSTM step.
         print(self.seq_embeddings)
-        inputs_wa = get_inputs(self.seq_embeddings,self.image_sub_features)
+        # inputs_wa = get_inputs(self.seq_embeddings,self.image_sub_features)
         
         lstm_outputs, state_tuple = lstm_cell(
             inputs=tf.squeeze(self.seq_embeddings, squeeze_dims=[1]),
@@ -515,7 +515,7 @@ class ShowAndTellModel(object):
         tf.concat(1,state_tuple, name="state")
       else:
         # Run the batch of sequence embeddings through the LSTM.
-        inputs_wa = get_inputs(self.seq_embeddings,self.image_sub_features)
+        # inputs_wa = get_inputs(self.seq_embeddings,self.image_sub_features)
 
         sequence_length = tf.reduce_sum(self.input_mask, 1)
         # lstm_outputs, _ = tf.nn.dynamic_rnn(cell=lstm_cell,
