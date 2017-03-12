@@ -105,11 +105,10 @@ class ShowAndTellModel(object):
   def get_inputs(self):
 	# self.image_sub_features [batch_size, sub_featrue_num, sub_feature_length]
 	# self.seq_embeddings [batch_size, padded_length, embedding_size]
-	batch_size, padded_length, embedding_size = self.seq_embeddings.get_shape()
-	batch_size, sub_feature_num, sub_feature_length = self.image_sub_features.get_shape()
+	batch_size, padded_length, embedding_size = tf.shape(self.seq_embeddings)
+	batch_size, sub_feature_num, sub_feature_length = tf.shape(self.image_sub_features)
 	# generate RNN input: word feature + local features
-	output = tf.zeros([batch_size, padded_length, 
-		embedding_size + sub_feature_num * sub_feature_length], tf.float32)
+	output = tf.zeros([batch_size, padded_length, embedding_size + sub_feature_length * sub_feature_num], tf.float32)
 	
 	for img in range(batch_size):
 		# for each image in batch_size
@@ -120,6 +119,9 @@ class ShowAndTellModel(object):
 	print(self.image_sub_features.get_shape())
 	print('output shape:')
 	print(output.get_shape())
+
+
+	#tf.concat([self.seq_embeddings, tf.reshape(self.image_sub_features,[batch_size, 1, -1])], 2)
 	return output
 
 
