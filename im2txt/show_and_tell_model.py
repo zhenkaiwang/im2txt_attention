@@ -335,7 +335,7 @@ class ShowAndTellModel(object):
       else:
         # Run the batch of sequence embeddings through the LSTM.
         sequence_length = tf.reduce_sum(self.input_mask, 1)
-        lstm_outputs, _ = tf.nn.dynamic_rnn(cell=lstm_cell,
+        lstm_outputs, _ = tf.rnn.dynamic_rnn(cell=lstm_cell,
                                             inputs=self.seq_embeddings,
                                             sequence_length=sequence_length,
                                             initial_state=initial_state,
