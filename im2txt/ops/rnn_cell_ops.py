@@ -234,7 +234,7 @@ def _state_size_with_prefix(state_size, prefix=None):
 #     return new_h, new_h
 
 
-# _LSTMStateTuple = collections.namedtuple("LSTMStateTuple", ("c", "h"))
+_LSTMStateTuple = collections.namedtuple("LSTMStateTuple", ("c", "h"))
 
 
 class LSTMStateTuple(_LSTMStateTuple):
