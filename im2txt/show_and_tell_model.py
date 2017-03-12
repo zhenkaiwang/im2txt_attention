@@ -345,7 +345,7 @@ class ShowAndTellModel(object):
         inputs_wa = get_inputs(self.seq_embeddings,self.image_sub_features)
         
         lstm_outputs, state_tuple = lstm_cell(
-            inputs=tf.squeeze(self.seq_embeddings, squeeze_dims=[1]),
+            inputs=tf.squeeze(inputs_wa, squeeze_dims=[1]),
             state=state_tuple)
 
         # Concatentate the resulting state.
@@ -357,7 +357,7 @@ class ShowAndTellModel(object):
 
         sequence_length = tf.reduce_sum(self.input_mask, 1)
         lstm_outputs, _ = tf.nn.dynamic_rnn(cell=lstm_cell,
-                                            inputs=self.seq_embeddings,
+                                            inputs=inputs_wa,
                                             sequence_length=sequence_length,
                                             initial_state=initial_state,
                                             dtype=tf.float32,
