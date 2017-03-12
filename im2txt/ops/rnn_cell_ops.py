@@ -61,6 +61,7 @@ from tensorflow.python.ops.math_ops import tanh
 from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.util import nest
 
+from tensorflow.python.ops import nn_ops 
 
 def _state_size_with_prefix(state_size, prefix=None):
   """Helper function that enables int or TensorShape shape specification.
@@ -300,6 +301,15 @@ class BasicLSTMCell(RNNCell):
   def output_size(self):
     return self._num_units
 
+  def f_att(image_subfeatures,subfeature_length,h)
+    state_length = self._num_units
+    f_att_matrix = vs.get_variable(name="f_att_matrix",shape = (subfeature_length,state_length), initializer=tf.contrib.layers.xavier_initializer())
+    e_ti = math_ops.matmul(math_ops.matmul(image_subfeatures,f_att_matrix),h)
+    return e_ti
+
+  def get_z(image_subfeatures,alpha_ti)
+    
+
   def __call__(self, inputs, state, scope=None):
     """Long short-term memory cell (LSTM)."""
     with vs.variable_scope(scope or type(self).__name__):  # "BasicLSTMCell"
@@ -309,7 +319,7 @@ class BasicLSTMCell(RNNCell):
       else:
         c, h = array_ops.split(1, 2, state)
       ## seperate inputs into word imbedding and image subfeatures
-      shape = net2.get_shape()
+      shape = inputs.get_shape()
       batch_size = shape[0].value
       #padded_length = shape[1].value
       single_input_length = shape[1].value
@@ -321,7 +331,7 @@ class BasicLSTMCell(RNNCell):
       #net2 = tf.reshape(net2, [shape2[0].value, -1, shape2[3].value])
       image_subfeatures=tf.reshape(image_subfeatures,[batch_size,subfeature_num,subfeature_length])
       e_ti = f_att(image_subfeatures,h)
-      alpha_ti = softmax(e_ti)
+      alpha_ti = nn_ops.softmax(e_ti)
       z_i = get_z(image_subfeatures,alpha_ti)
 
 
