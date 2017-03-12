@@ -32,7 +32,8 @@ from im2txt.ops import inputs as input_ops
 #RNNCELL
 from im2txt.ops import rnn_cell_ops
 
-tf.nn.rnn_cell.BasicLSTMCell=rnn_cell_ops.BasicLSTMCell
+
+tf.nn.rnn_cell=rnn_cell_ops
 
 
 class ShowAndTellModel(object):
