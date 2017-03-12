@@ -124,7 +124,7 @@ def inception_v3(images,
                  batch_norm_params=None,
                  add_summaries=True,
                  scope="InceptionV3",
-                 layer='InceptionV3/Mixed_7c'):
+                 layer='Mixed_7c'):
   """Builds an Inception V3 subgraph for image embeddings.
 
   Args:
