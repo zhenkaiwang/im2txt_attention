@@ -116,8 +116,10 @@ class ShowAndTellModel(object):
 		for pad in range(padded_length):
 			output[img][pad] = tf.concat([tf.reshape(self.seq_embeddings[img][pad], [-1]),
 								tf.reshape(self.image_sub_features[img], [-1])])
-	print(self.seq_embeddings.get_shape(), self.image_sub_features.get_shape())
-	print('output shape:', output.get_shape())
+	print(self.seq_embeddings.get_shape())
+	print(self.image_sub_features.get_shape())
+	print('output shape:')
+	print(output.get_shape())
 	return output
 
 
