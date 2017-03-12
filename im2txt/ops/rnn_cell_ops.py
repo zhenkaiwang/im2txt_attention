@@ -60,7 +60,7 @@ from tensorflow.python.ops.math_ops import tanh
 
 from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.util import nest
-from tf.nn.cell import RNNCell
+from tf.nn.rnn_cell import RNNCell
 
 
 def _state_size_with_prefix(state_size, prefix=None):
