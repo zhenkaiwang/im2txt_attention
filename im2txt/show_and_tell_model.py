@@ -184,39 +184,39 @@ class ShowAndTellModel(object):
     self.input_mask = input_mask
 
   #superNLP
-  def build_sub_image_embeddings(self):
-    """Builds the image model subgraph and generates image embeddings.
+  # def build_sub_image_embeddings(self):
+  #   """Builds the image model subgraph and generates image embeddings.
 
-    Inputs:
-      self.images
+  #   Inputs:
+  #     self.images
 
-    Outputs:
-      self.image_embeddings
-    """
-    inception_output = image_embedding.inception_v3(
-        self.images,
-        trainable=self.train_inception,
-        is_training=self.is_training(),scope="InceptionV3",layer="Conv2d_4a_3x3")
-    self.inception_variables = tf.get_collection(
-        tf.GraphKeys.GLOBAL_VARIABLES, scope="InceptionV3")
-    '''
-    # Map inception output into embedding space.
-    with tf.variable_scope("image_embedding") as scope:
-      image_embeddings = tf.contrib.layers.fully_connected(
-          inputs=inception_output,
-          num_outputs=self.config.embedding_size,
-          activation_fn=None,
-          weights_initializer=self.initializer,
-          biases_initializer=None,
-          scope=scope)
+  #   Outputs:
+  #     self.image_embeddings
+  #   """
+  #   inception_output = image_embedding.inception_v3(
+  #       self.images,
+  #       trainable=self.train_inception,
+  #       is_training=self.is_training(),scope="InceptionV3",layer="Conv2d_4a_3x3")
+  #   self.inception_variables = tf.get_collection(
+  #       tf.GraphKeys.GLOBAL_VARIABLES, scope="InceptionV3")
+  #   '''
+  #   # Map inception output into embedding space.
+  #   with tf.variable_scope("image_embedding") as scope:
+  #     image_embeddings = tf.contrib.layers.fully_connected(
+  #         inputs=inception_output,
+  #         num_outputs=self.config.embedding_size,
+  #         activation_fn=None,
+  #         weights_initializer=self.initializer,
+  #         biases_initializer=None,
+  #         scope=scope)
 
-    # Save the embedding size in the graph.
-    tf.constant(self.config.embedding_size, name="embedding_size")
-    '''
-    #IncepShape = inception_output.get_shape()
-    print(inception_output)
-    self.image_sub_features = inception_output
-  #superNLP
+  #   # Save the embedding size in the graph.
+  #   tf.constant(self.config.embedding_size, name="embedding_size")
+  #   '''
+  #   #IncepShape = inception_output.get_shape()
+  #   print(inception_output)
+  #   self.image_sub_features = inception_output
+  # #superNLP
 
 
   def build_image_embeddings(self):
@@ -228,7 +228,7 @@ class ShowAndTellModel(object):
     Outputs:
       self.image_embeddings
     """
-    inception_output = image_embedding.inception_v3(
+    inception_output,inception_output_sub = image_embedding.inception_v3(
         self.images,
         trainable=self.train_inception,
         is_training=self.is_training())
@@ -249,6 +249,8 @@ class ShowAndTellModel(object):
     tf.constant(self.config.embedding_size, name="embedding_size")
 
     self.image_embeddings = image_embeddings
+    self.image_sub_features = inception_output_sub
+
 
   def build_seq_embeddings(self):
     """Builds the input sequence embeddings.

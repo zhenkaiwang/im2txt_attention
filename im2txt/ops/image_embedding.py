@@ -184,13 +184,14 @@ def inception_v3(images,
           normalizer_fn=slim.batch_norm,
           normalizer_params=batch_norm_params):
         net, end_points = inception_v3_base(images, final_endpoint=layer,scope=scope)
+        net2, end_points = inception_v3_base(images, final_endpoint="Conv2d_4a_3x3",scope=scope)
 
         
         with tf.variable_scope("logits"):
-           shape = net.get_shape()
+           shape = net2.get_shape()
 	   print(shape[0])
 	   print(shape[3])
-           net = tf.reshape(net, [shape[0].value, -1, shape[3].value])
+           net2 = tf.reshape(net, [shape[0].value, -1, shape[3].value])
           #net = slim.avg_pool2d(net, shape[1:3], padding="VALID", scope="pool")
           #net = slim.dropout(
           #    net,
@@ -205,4 +206,4 @@ def inception_v3(images,
     for v in end_points.values():
       tf.contrib.layers.summaries.summarize_activation(v)
 
-  return net
+  return net,net2
