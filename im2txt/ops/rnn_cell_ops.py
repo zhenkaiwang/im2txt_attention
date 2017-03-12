@@ -322,6 +322,7 @@ class BasicLSTMCell(RNNCell):
       else:
         c, h = array_ops.split(1, 2, state)
       ## seperate inputs into word imbedding and image subfeatures
+
       shape = inputs.get_shape()
       print("shape ")
       print(shape)
@@ -335,13 +336,15 @@ class BasicLSTMCell(RNNCell):
       word_imbedding_length = 512
       subfeature_length = 192#(single_input_length-word_imbedding_length)/subfeature_num;
       subfeature_num = (single_input_length-word_imbedding_length)/subfeature_length
-      word_imbedding=inputs[:,0:word_imbedding_length]
-      image_subfeatures=inputs[:,word_imbedding_length:single_input_length]
-      #net2 = tf.reshape(net2, [shape2[0].value, -1, shape2[3].value])
-      image_subfeatures=array_ops.reshape(image_subfeatures,[batch_size,subfeature_num,subfeature_length])
-      e_ti = f_att(image_subfeatures,h,scope)
-      alpha_ti = nn_ops.softmax(e_ti)
-      z_i = get_z(image_subfeatures,alpha_ti)
+      z_i = array_ops.zeros([batch_size,subfeature_length])
+      if single_input_length != word_imbedding_length:
+        word_imbedding=inputs[:,0:word_imbedding_length]
+        image_subfeatures=inputs[:,word_imbedding_length:single_input_length]
+        #net2 = tf.reshape(net2, [shape2[0].value, -1, shape2[3].value])
+        image_subfeatures=array_ops.reshape(image_subfeatures,[batch_size,subfeature_num,subfeature_length])
+        e_ti = f_att(image_subfeatures,h,scope)
+        alpha_ti = nn_ops.softmax(e_ti)
+        z_i = get_z(image_subfeatures,alpha_ti)
 
       concat = _linear([word_imbeddings, h, z_i], 4 * self._num_units, True)
       # i = input_gate, j = new_input, f = forget_gate, o = output_gate
