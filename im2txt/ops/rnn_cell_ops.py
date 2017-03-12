@@ -302,14 +302,14 @@ class BasicLSTMCell(RNNCell):
   def output_size(self):
     return self._num_units
 
-  def f_att(image_subfeatures,subfeature_length,h,scope)
+  def f_att(image_subfeatures,subfeature_length,h,scope):
     state_length = self._num_units
     with vs.variable_scope(scope or "F_att"):
       f_att_matrix = vs.get_variable(name="f_att_matrix",shape = (subfeature_length,state_length), initializer=tf.contrib.layers.xavier_initializer())
     e_ti = math_ops.matmul(math_ops.matmul(image_subfeatures,f_att_matrix),h)
     return e_ti
 
-  def get_z(image_subfeatures,alpha_ti)
+  def get_z(image_subfeatures,alpha_ti):
     z_i = math_ops.reduce_sum(math_ops.matmul(image_subfeatures,alpha_ti),axis=1)
     return z_i
 
@@ -332,7 +332,7 @@ class BasicLSTMCell(RNNCell):
       word_imbedding=inputs[:,0:word_imbedding_length]
       image_subfeatures=inputs[:,word_imbedding_length:single_input_length]
       #net2 = tf.reshape(net2, [shape2[0].value, -1, shape2[3].value])
-      image_subfeatures=tf.reshape(image_subfeatures,[batch_size,subfeature_num,subfeature_length])
+      image_subfeatures=array_ops.reshape(image_subfeatures,[batch_size,subfeature_num,subfeature_length])
       e_ti = f_att(image_subfeatures,h,scope)
       alpha_ti = nn_ops.softmax(e_ti)
       z_i = get_z(image_subfeatures,alpha_ti)
