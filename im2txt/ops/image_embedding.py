@@ -186,6 +186,10 @@ def inception_v3(images,
         net, end_points = inception_v3_base(images, final_endpoint=layer,scope=scope)
         # net2, end_points = inception_v3_base(images, final_endpoint="Conv2d_4a_3x3",scope=scope)
         net2=end_points["Conv2d_4a_3x3"]
+        net2 = tf.reshape(net2, [shape2[0].value, -1, shape2[3].value])
+        shape2 = net2.get_shape()
+        print(shape2[0])
+        print(shape2[3])
         with tf.variable_scope("logits"):
           shape = net.get_shape()
           net = slim.avg_pool2d(net, shape[1:3], padding="VALID", scope="pool")
@@ -195,10 +199,6 @@ def inception_v3(images,
               is_training=is_inception_model_training,
               scope="dropout")
           net = slim.flatten(net, scope="flatten")
-        shape2 = net2.get_shape()
-	      print(shape2[0])
-	      print(shape2[3])
-        net2 = tf.reshape(net2, [shape2[0].value, -1, shape2[3].value])
         
 
   # Add summaries.
