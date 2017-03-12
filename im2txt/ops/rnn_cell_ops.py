@@ -325,7 +325,7 @@ class BasicLSTMCell(RNNCell):
       shape = inputs.get_shape()
       batch_size = shape[0].value
       #padded_length = shape[1].value
-      single_input_length = shape[1].value
+      single_input_length = shape[1].value  ###
       word_imbedding_length = 512;
       subfeature_num = 14*14;#(single_input_length-word_imbedding_length)/subfeature_length;
       subfeature_length = (single_input_length-word_imbedding_length)/subfeature_num;
@@ -337,7 +337,7 @@ class BasicLSTMCell(RNNCell):
       alpha_ti = nn_ops.softmax(e_ti)
       z_i = get_z(image_subfeatures,alpha_ti)
 
-      concat = _linear([word_imbeddings, h, z_i], 4 * self._num_units, True)
+      concat = _linear([word_imbeddings, h, z_i], 4 * self._num_units, True) ###
       # i = input_gate, j = new_input, f = forget_gate, o = output_gate
       i, j, f, o = array_ops.split(1, 4, concat)
 
