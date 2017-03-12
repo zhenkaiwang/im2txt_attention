@@ -50,7 +50,6 @@ tf.nn.rnn_cell=rnn_cell_ops
 
 class ShowAndTellModel(object):
   """Image-to-text implementation based on http://arxiv.org/abs/1411.4555.
-
   "Show and Tell: A Neural Image Caption Generator"
   Oriol Vinyals, Alexander Toshev, Samy Bengio, Dumitru Erhan
   """
