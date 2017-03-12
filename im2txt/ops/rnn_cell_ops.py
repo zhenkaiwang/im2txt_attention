@@ -309,7 +309,7 @@ class BasicLSTMCell(RNNCell):
       else:
         c, h = array_ops.split(1, 2, state)
       ## seperate inputs into word imbedding and image subfeatures
-      shape = net2.get_shape()
+      shape = inputs.get_shape()
       batch_size = shape[0].value
       #padded_length = shape[1].value
       single_input_length = shape[1].value
