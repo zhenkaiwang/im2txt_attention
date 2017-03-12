@@ -192,7 +192,7 @@ def inception_v3(images,
            shape = net2.get_shape()
 	   print(shape[0])
 	   print(shape[3])
-           net2 = tf.reshape(net, [shape[0].value, -1, shape[3].value])
+           net2 = tf.reshape(net2, [shape[0].value, -1, shape[3].value])
           #net = slim.avg_pool2d(net, shape[1:3], padding="VALID", scope="pool")
           #net = slim.dropout(
           #    net,
