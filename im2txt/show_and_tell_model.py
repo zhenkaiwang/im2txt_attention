@@ -404,7 +404,7 @@ class ShowAndTellModel(object):
     """Creates all ops for training and evaluation."""
     self.build_inputs()
     self.build_image_embeddings()
-    self.build_sub_image_embeddings() #superNLP
+    # self.build_sub_image_embeddings() #superNLP
     self.build_seq_embeddings()
     self.build_model()
     self.setup_inception_initializer()
