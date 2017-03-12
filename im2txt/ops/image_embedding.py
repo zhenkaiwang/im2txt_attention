@@ -184,7 +184,8 @@ def inception_v3(images,
           normalizer_fn=slim.batch_norm,
           normalizer_params=batch_norm_params):
         net, end_points = inception_v3_base(images, final_endpoint=layer,scope=scope)
-        net2, end_points = inception_v3_base(images, final_endpoint="Conv2d_4a_3x3",scope=scope)
+        # net2, end_points = inception_v3_base(images, final_endpoint="Conv2d_4a_3x3",scope=scope)
+        net2=end_points["Conv2d_4a_3x3"]
 
         
         with tf.variable_scope("logits"):
