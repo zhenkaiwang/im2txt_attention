@@ -288,12 +288,12 @@ class ShowAndTellModel(object):
     # modified LSTM in the "Show and Tell" paper has no biases and outputs
     # new_c * sigmoid(o).
     # lstm_cell = tf.contrib.rnn.BasicLSTMCell(
-    lstm_cell = tf.nn.rnn_cell.BasicLSTMCell(
-    # lstm_cell = rnn_cell_ops.BasicLSTMCell(
+    # lstm_cell = tf.nn.rnn_cell.BasicLSTMCell(
+    lstm_cell = rnn_cell_ops.BasicLSTMCell(
         num_units=self.config.num_lstm_units, state_is_tuple=True)
     if self.mode == "train":
-      lstm_cell = tf.nn.rnn_cell.DropoutWrapper(
-      # lstm_cell = rnn_cell_ops.DropoutWrapper(
+      # lstm_cell = tf.nn.rnn_cell.DropoutWrapper(
+      lstm_cell = rnn_cell_ops.DropoutWrapper(
           lstm_cell,
           input_keep_prob=self.config.lstm_dropout_keep_prob,
           output_keep_prob=self.config.lstm_dropout_keep_prob)
