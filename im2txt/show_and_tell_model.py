@@ -193,10 +193,10 @@ class ShowAndTellModel(object):
     Outputs:
       self.image_embeddings
     """
-    inception_output = image_embedding.inception_v3_sub(
+    inception_output = image_embedding.inception_v3(
         self.images,
         trainable=self.train_inception,
-        is_training=self.is_training(),scope="InceptionV3")
+        is_training=self.is_training(),scope="InceptionV3",layer="Conv2d_4a_3x3")
     self.inception_variables = tf.get_collection(
         tf.GraphKeys.GLOBAL_VARIABLES, scope="InceptionV3")
     '''
