@@ -196,9 +196,9 @@ class ShowAndTellModel(object):
     inception_output = image_embedding.inception_v3_sub(
         self.images,
         trainable=self.train_inception,
-        is_training=self.is_training(),scope="InceptionV3_sub")
+        is_training=self.is_training(),scope="InceptionV3")
     self.inception_variables = tf.get_collection(
-        tf.GraphKeys.GLOBAL_VARIABLES, scope="InceptionV3_sub")
+        tf.GraphKeys.GLOBAL_VARIABLES, scope="InceptionV3")
     '''
     # Map inception output into embedding space.
     with tf.variable_scope("image_embedding") as scope:
