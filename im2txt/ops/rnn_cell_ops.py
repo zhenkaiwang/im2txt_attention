@@ -60,6 +60,7 @@ from tensorflow.python.ops.math_ops import tanh
 
 from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.util import nest
+from tensorflow.python.ops.rnn_cell import RNNCell
 
 from tensorflow.python.ops import nn_ops 
 
@@ -85,153 +86,153 @@ def _state_size_with_prefix(state_size, prefix=None):
   return result_state_size
 
 
-class RNNCell(object):
-  """Abstract object representing an RNN cell.
+# class RNNCell(object):
+#   """Abstract object representing an RNN cell.
 
-  The definition of cell in this package differs from the definition used in the
-  literature. In the literature, cell refers to an object with a single scalar
-  output. The definition in this package refers to a horizontal array of such
-  units.
+#   The definition of cell in this package differs from the definition used in the
+#   literature. In the literature, cell refers to an object with a single scalar
+#   output. The definition in this package refers to a horizontal array of such
+#   units.
 
-  An RNN cell, in the most abstract setting, is anything that has
-  a state and performs some operation that takes a matrix of inputs.
-  This operation results in an output matrix with `self.output_size` columns.
-  If `self.state_size` is an integer, this operation also results in a new
-  state matrix with `self.state_size` columns.  If `self.state_size` is a
-  tuple of integers, then it results in a tuple of `len(state_size)` state
-  matrices, each with a column size corresponding to values in `state_size`.
+#   An RNN cell, in the most abstract setting, is anything that has
+#   a state and performs some operation that takes a matrix of inputs.
+#   This operation results in an output matrix with `self.output_size` columns.
+#   If `self.state_size` is an integer, this operation also results in a new
+#   state matrix with `self.state_size` columns.  If `self.state_size` is a
+#   tuple of integers, then it results in a tuple of `len(state_size)` state
+#   matrices, each with a column size corresponding to values in `state_size`.
 
-  This module provides a number of basic commonly used RNN cells, such as
-  LSTM (Long Short Term Memory) or GRU (Gated Recurrent Unit), and a number
-  of operators that allow add dropouts, projections, or embeddings for inputs.
-  Constructing multi-layer cells is supported by the class `MultiRNNCell`,
-  or by calling the `rnn` ops several times. Every `RNNCell` must have the
-  properties below and and implement `__call__` with the following signature.
-  """
+#   This module provides a number of basic commonly used RNN cells, such as
+#   LSTM (Long Short Term Memory) or GRU (Gated Recurrent Unit), and a number
+#   of operators that allow add dropouts, projections, or embeddings for inputs.
+#   Constructing multi-layer cells is supported by the class `MultiRNNCell`,
+#   or by calling the `rnn` ops several times. Every `RNNCell` must have the
+#   properties below and and implement `__call__` with the following signature.
+#   """
 
-  def __call__(self, inputs, state, scope=None):
-    """Run this RNN cell on inputs, starting from the given state.
+#   def __call__(self, inputs, state, scope=None):
+#     """Run this RNN cell on inputs, starting from the given state.
 
-    Args:
-      inputs: `2-D` tensor with shape `[batch_size x input_size]`.
-      state: if `self.state_size` is an integer, this should be a `2-D Tensor`
-        with shape `[batch_size x self.state_size]`.  Otherwise, if
-        `self.state_size` is a tuple of integers, this should be a tuple
-        with shapes `[batch_size x s] for s in self.state_size`.
-      scope: VariableScope for the created subgraph; defaults to class name.
+#     Args:
+#       inputs: `2-D` tensor with shape `[batch_size x input_size]`.
+#       state: if `self.state_size` is an integer, this should be a `2-D Tensor`
+#         with shape `[batch_size x self.state_size]`.  Otherwise, if
+#         `self.state_size` is a tuple of integers, this should be a tuple
+#         with shapes `[batch_size x s] for s in self.state_size`.
+#       scope: VariableScope for the created subgraph; defaults to class name.
 
-    Returns:
-      A pair containing:
+#     Returns:
+#       A pair containing:
 
-      - Output: A `2-D` tensor with shape `[batch_size x self.output_size]`.
-      - New state: Either a single `2-D` tensor, or a tuple of tensors matching
-        the arity and shapes of `state`.
-    """
-    raise NotImplementedError("Abstract method")
+#       - Output: A `2-D` tensor with shape `[batch_size x self.output_size]`.
+#       - New state: Either a single `2-D` tensor, or a tuple of tensors matching
+#         the arity and shapes of `state`.
+#     """
+#     raise NotImplementedError("Abstract method")
 
-  @property
-  def state_size(self):
-    """size(s) of state(s) used by this cell.
+#   @property
+#   def state_size(self):
+#     """size(s) of state(s) used by this cell.
 
-    It can be represented by an Integer, a TensorShape or a tuple of Integers
-    or TensorShapes.
-    """
-    raise NotImplementedError("Abstract method")
+#     It can be represented by an Integer, a TensorShape or a tuple of Integers
+#     or TensorShapes.
+#     """
+#     raise NotImplementedError("Abstract method")
 
-  @property
-  def output_size(self):
-    """Integer or TensorShape: size of outputs produced by this cell."""
-    raise NotImplementedError("Abstract method")
+#   @property
+#   def output_size(self):
+#     """Integer or TensorShape: size of outputs produced by this cell."""
+#     raise NotImplementedError("Abstract method")
 
-  def zero_state(self, batch_size, dtype):
-    """Return zero-filled state tensor(s).
+#   def zero_state(self, batch_size, dtype):
+#     """Return zero-filled state tensor(s).
 
-    Args:
-      batch_size: int, float, or unit Tensor representing the batch size.
-      dtype: the data type to use for the state.
+#     Args:
+#       batch_size: int, float, or unit Tensor representing the batch size.
+#       dtype: the data type to use for the state.
 
-    Returns:
-      If `state_size` is an int or TensorShape, then the return value is a
-      `N-D` tensor of shape `[batch_size x state_size]` filled with zeros.
+#     Returns:
+#       If `state_size` is an int or TensorShape, then the return value is a
+#       `N-D` tensor of shape `[batch_size x state_size]` filled with zeros.
 
-      If `state_size` is a nested list or tuple, then the return value is
-      a nested list or tuple (of the same structure) of `2-D` tensors with
-    the shapes `[batch_size x s]` for each s in `state_size`.
-    """
-    state_size = self.state_size
-    if nest.is_sequence(state_size):
-      state_size_flat = nest.flatten(state_size)
-      zeros_flat = [
-          array_ops.zeros(
-              array_ops.pack(_state_size_with_prefix(s, prefix=[batch_size])),
-              dtype=dtype)
-          for s in state_size_flat]
-      for s, z in zip(state_size_flat, zeros_flat):
-        z.set_shape(_state_size_with_prefix(s, prefix=[None]))
-      zeros = nest.pack_sequence_as(structure=state_size,
-                                    flat_sequence=zeros_flat)
-    else:
-      zeros_size = _state_size_with_prefix(state_size, prefix=[batch_size])
-      zeros = array_ops.zeros(array_ops.pack(zeros_size), dtype=dtype)
-      zeros.set_shape(_state_size_with_prefix(state_size, prefix=[None]))
+#       If `state_size` is a nested list or tuple, then the return value is
+#       a nested list or tuple (of the same structure) of `2-D` tensors with
+#     the shapes `[batch_size x s]` for each s in `state_size`.
+#     """
+#     state_size = self.state_size
+#     if nest.is_sequence(state_size):
+#       state_size_flat = nest.flatten(state_size)
+#       zeros_flat = [
+#           array_ops.zeros(
+#               array_ops.pack(_state_size_with_prefix(s, prefix=[batch_size])),
+#               dtype=dtype)
+#           for s in state_size_flat]
+#       for s, z in zip(state_size_flat, zeros_flat):
+#         z.set_shape(_state_size_with_prefix(s, prefix=[None]))
+#       zeros = nest.pack_sequence_as(structure=state_size,
+#                                     flat_sequence=zeros_flat)
+#     else:
+#       zeros_size = _state_size_with_prefix(state_size, prefix=[batch_size])
+#       zeros = array_ops.zeros(array_ops.pack(zeros_size), dtype=dtype)
+#       zeros.set_shape(_state_size_with_prefix(state_size, prefix=[None]))
 
-    return zeros
-
-
-class BasicRNNCell(RNNCell):
-  """The most basic RNN cell."""
-
-  def __init__(self, num_units, input_size=None, activation=tanh):
-    if input_size is not None:
-      logging.warn("%s: The input_size parameter is deprecated.", self)
-    self._num_units = num_units
-    self._activation = activation
-
-  @property
-  def state_size(self):
-    return self._num_units
-
-  @property
-  def output_size(self):
-    return self._num_units
-
-  def __call__(self, inputs, state, scope=None):
-    """Most basic RNN: output = new_state = activation(W * input + U * state + B)."""
-    with vs.variable_scope(scope or type(self).__name__):  # "BasicRNNCell"
-      output = self._activation(_linear([inputs, state], self._num_units, True))
-    return output, output
+#     return zeros
 
 
-class GRUCell(RNNCell):
-  """Gated Recurrent Unit cell (cf. http://arxiv.org/abs/1406.1078)."""
+# class BasicRNNCell(RNNCell):
+#   """The most basic RNN cell."""
 
-  def __init__(self, num_units, input_size=None, activation=tanh):
-    if input_size is not None:
-      logging.warn("%s: The input_size parameter is deprecated.", self)
-    self._num_units = num_units
-    self._activation = activation
+#   def __init__(self, num_units, input_size=None, activation=tanh):
+#     if input_size is not None:
+#       logging.warn("%s: The input_size parameter is deprecated.", self)
+#     self._num_units = num_units
+#     self._activation = activation
 
-  @property
-  def state_size(self):
-    return self._num_units
+#   @property
+#   def state_size(self):
+#     return self._num_units
 
-  @property
-  def output_size(self):
-    return self._num_units
+#   @property
+#   def output_size(self):
+#     return self._num_units
 
-  def __call__(self, inputs, state, scope=None):
-    """Gated recurrent unit (GRU) with nunits cells."""
-    with vs.variable_scope(scope or type(self).__name__):  # "GRUCell"
-      with vs.variable_scope("Gates"):  # Reset gate and update gate.
-        # We start with bias of 1.0 to not reset and not update.
-        r, u = array_ops.split(1, 2, _linear([inputs, state],
-                                             2 * self._num_units, True, 1.0))
-        r, u = sigmoid(r), sigmoid(u)
-      with vs.variable_scope("Candidate"):
-        c = self._activation(_linear([inputs, r * state],
-                                     self._num_units, True))
-      new_h = u * state + (1 - u) * c
-    return new_h, new_h
+#   def __call__(self, inputs, state, scope=None):
+#     """Most basic RNN: output = new_state = activation(W * input + U * state + B)."""
+#     with vs.variable_scope(scope or type(self).__name__):  # "BasicRNNCell"
+#       output = self._activation(_linear([inputs, state], self._num_units, True))
+#     return output, output
+
+
+# class GRUCell(RNNCell):
+#   """Gated Recurrent Unit cell (cf. http://arxiv.org/abs/1406.1078)."""
+
+#   def __init__(self, num_units, input_size=None, activation=tanh):
+#     if input_size is not None:
+#       logging.warn("%s: The input_size parameter is deprecated.", self)
+#     self._num_units = num_units
+#     self._activation = activation
+
+#   @property
+#   def state_size(self):
+#     return self._num_units
+
+#   @property
+#   def output_size(self):
+#     return self._num_units
+
+#   def __call__(self, inputs, state, scope=None):
+#     """Gated recurrent unit (GRU) with nunits cells."""
+#     with vs.variable_scope(scope or type(self).__name__):  # "GRUCell"
+#       with vs.variable_scope("Gates"):  # Reset gate and update gate.
+#         # We start with bias of 1.0 to not reset and not update.
+#         r, u = array_ops.split(1, 2, _linear([inputs, state],
+#                                              2 * self._num_units, True, 1.0))
+#         r, u = sigmoid(r), sigmoid(u)
+#       with vs.variable_scope("Candidate"):
+#         c = self._activation(_linear([inputs, r * state],
+#                                      self._num_units, True))
+#       new_h = u * state + (1 - u) * c
+#     return new_h, new_h
 
 
 _LSTMStateTuple = collections.namedtuple("LSTMStateTuple", ("c", "h"))
@@ -319,6 +320,7 @@ class BasicLSTMCell(RNNCell):
       else:
         c, h = array_ops.split(1, 2, state)
       ## seperate inputs into word imbedding and image subfeatures
+      '''
       shape = inputs.get_shape()
       batch_size = shape[0].value
       #padded_length = shape[1].value
@@ -333,9 +335,9 @@ class BasicLSTMCell(RNNCell):
       e_ti = f_att(image_subfeatures,h)
       alpha_ti = nn_ops.softmax(e_ti)
       z_i = get_z(image_subfeatures,alpha_ti)
+      '''
 
-
-      concat = _linear([inputs, h, z_i], 4 * self._num_units, True)
+      concat = _linear([inputs, h], 4 * self._num_units, True)
       # i = input_gate, j = new_input, f = forget_gate, o = output_gate
       i, j, f, o = array_ops.split(1, 4, concat)
 
