@@ -54,7 +54,8 @@ def main(_):
   with tf.Session(graph=g) as sess:
     # Load the model from checkpoint.
     restore_fn(sess)
-
+    
+    file_writer = tf.summary.FileWriter('/home/superNLP/ours/im2txt_attention/tesnboard', sess.graph)
     # Prepare the caption generator. Here we are implicitly using the default
     # beam search parameters. See caption_generator.py for a description of the
     # available beam search parameters.
@@ -70,8 +71,8 @@ def main(_):
       print(img_dir+filename, 'filepath')
       print(num)
       num += 1
-      #if num>20:
-      #    break
+      if num>20:
+          break
       if(filename != '.' and filename != '..'):
           #filename="/home/superNLP/usb_hdd/cocodata/"
           with tf.gfile.GFile(img_dir+filename, "r") as f:
@@ -96,6 +97,6 @@ def main(_):
             temp["caption"] = sentence[0:len(sentence)-2]
             imgId_cap.append(temp)
             break
-    output_file.write(json.dumps(imgId_cap))
+    #output_file.write(json.dumps(imgId_cap))
 if __name__ == "__main__":
   tf.app.run()
