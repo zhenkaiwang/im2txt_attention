@@ -188,8 +188,8 @@ def inception_v3(images,
         net2=end_points["Conv2d_4a_3x3"]
         shape2 = net2.get_shape()
         net2 = tf.reshape(net2, [shape2[0].value, -1, shape2[3].value])
-        print(shape2[0])
-        print(shape2[3])
+        print("sub_feature_shape")
+        print(shape2)
         with tf.variable_scope("logits"):
           shape = net.get_shape()
           net = slim.avg_pool2d(net, shape[1:3], padding="VALID", scope="pool")
