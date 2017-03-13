@@ -149,6 +149,7 @@ class CaptionGenerator(object):
       A list of Caption sorted by descending score.
     """
     # Feed in the image to get the initial state.
+    print("enter beam search")
     initial_state = self.model.feed_image(sess, encoded_image)
 
     initial_beam = Caption(
@@ -163,6 +164,7 @@ class CaptionGenerator(object):
 
     # Run beam search.
     for _ in range(self.max_caption_length - 1):
+      print("run beam search")
       partial_captions_list = partial_captions.extract()
       partial_captions.reset()
       input_feed = np.array([c.sentence[-1] for c in partial_captions_list])
