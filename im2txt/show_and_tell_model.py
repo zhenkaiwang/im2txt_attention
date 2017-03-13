@@ -131,10 +131,10 @@ class ShowAndTellModel(object):
 	# 	i = tf.constant(0)
 	# 	index=0
 	# 	r=tf.while_loop(while_condition,_body,[i,index,img])
-	shape_sub_list= self.image_sub_features.get_shape().as_list()
+	# shape_sub_list= self.image_sub_features.get_shape().as_list()
 	shape_sub=tf.shape(self.image_sub_features)
 	shape_seq=tf.shape(self.seq_embeddings)
-	image_sub_reshaped=tf.reshape(self.image_sub_features,[shape_sub_list[0],1,-1])
+	image_sub_reshaped=tf.reshape(self.image_sub_features,[self.config.batch_size,1,-1])
 	image_sub_tile=tf.tile(image_sub_reshaped,tf.pack([1,shape_seq[1],1]))
 	output=tf.concat(2,[self.seq_embeddings,image_sub_tile])
 	return output
