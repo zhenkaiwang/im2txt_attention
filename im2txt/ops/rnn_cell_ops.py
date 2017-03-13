@@ -329,8 +329,8 @@ class BasicLSTMCell(RNNCell):
       # print("shape ")
       # print(shape)
       batch_size = shape[0]
-      # print("batch_size ")
-      # print(batch_size)
+      print("batch_size ")
+      print(batch_size)
       #padded_length = shape[1].value
       single_input_length = shape[1]
       # print("single_input_length ")
