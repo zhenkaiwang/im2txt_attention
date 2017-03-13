@@ -120,7 +120,7 @@ class ShowAndTellModel(object):
 	for img in range(batch_size):
 		i = tf.constant(0)
 		index=0
-		r=tf.while_loop(while_condition,body,i)
+		r=tf.while_loop(while_condition,body,[i])
 	return output
 
 
