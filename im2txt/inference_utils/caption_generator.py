@@ -164,12 +164,12 @@ class CaptionGenerator(object):
 
     # Run beam search.
     for _ in range(self.max_caption_length - 1):
-      print("run beam search")
+      # print("run beam search")
       partial_captions_list = partial_captions.extract()
       partial_captions.reset()
       input_feed = np.array([c.sentence[-1] for c in partial_captions_list])
       state_feed = np.array([c.state for c in partial_captions_list])
-      print("inference step start")
+      # print("inference step start")
       #initial_state = self.model.feed_image(sess, encoded_image)
       #print("image_feed agian")
       softmax, new_states, metadata = self.model.inference_step(sess,
@@ -177,7 +177,7 @@ class CaptionGenerator(object):
                                                                 state_feed,
                                                                 encoded_image)
       # initial_state = self.model.feed_image(sess, encoded_image)
-      print("inference step done")
+      # print("inference step done")
       for i, partial_caption in enumerate(partial_captions_list):
         word_probabilities = softmax[i]
         state = new_states[i]
