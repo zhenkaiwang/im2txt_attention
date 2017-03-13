@@ -98,5 +98,7 @@ def main(_):
             imgId_cap.append(temp)
             break
     #output_file.write(json.dumps(imgId_cap))
+    file_writer.add_graph(sess.graph)
+    file_writer.close()
 if __name__ == "__main__":
   tf.app.run()
