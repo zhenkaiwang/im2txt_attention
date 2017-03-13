@@ -185,11 +185,26 @@ def inception_v3(images,
           normalizer_params=batch_norm_params):
         net, end_points = inception_v3_base(images, final_endpoint=layer,scope=scope)
         # net2, end_points = inception_v3_base(images, final_endpoint="Conv2d_4a_3x3",scope=scope)
-        net2=end_points["Conv2d_4a_3x3"]
+        net2=end_points["MaxPool_5a_3x3"]
         shape2 = net2.get_shape()
         net2 = tf.reshape(net2, [shape2[0].value, -1, shape2[3].value])
         print("sub_feature_shape")
         print(shape2)
+        '''
+        "InceptionV3/Conv2d_1a_3x3": 960,
+        "InceptionV3/Conv2d_2a_3x3": 9312,
+        "InceptionV3/Conv2d_2b_3x3": 18624,
+        "InceptionV3/Conv2d_3b_1x1": 5360,
+        "InceptionV3/Conv2d_4a_3x3": 138816,
+        '''
+        # print("Conv2d_1a_3x3")
+        # print(end_points["Conv2d_1a_3x3"].get_shape())
+        # print("Conv2d_2a_3x3")
+        # print(end_points["Conv2d_2a_3x3"].get_shape())
+        # print("Conv2d_2a_3x3")
+        # print(end_points["Conv2d_2b_3x3"].get_shape())
+        # print("Conv2d_2b_3x3")
+        # print(end_points["Conv2d_1a_3x3"].get_shape())
         with tf.variable_scope("logits"):
           shape = net.get_shape()
           net = slim.avg_pool2d(net, shape[1:3], padding="VALID", scope="pool")
