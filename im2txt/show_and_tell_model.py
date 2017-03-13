@@ -330,6 +330,8 @@ class ShowAndTellModel(object):
 	output=tf.concat(2,[self.seq_embeddings,image_sub_tile])
 	print('sub features shape')
 	print(self.image_sub_features)
+	print('input_wa')
+	print(output)
 	self.inputs_wa=output
 	# return output
 
