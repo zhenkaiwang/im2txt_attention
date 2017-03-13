@@ -352,6 +352,7 @@ class BasicLSTMCell(RNNCell):
         image_subfeatures=array_ops.reshape(image_subfeatures,[batch_size,subfeature_num,subfeature_length])
         f_att_matrix=tf.expand_dims(f_att_matrix,0)
         f_att_matrix_tile=tf.tile(f_att_matrix,tf.pack([batch_size,1,1]))
+        h=tf.expand_dims(h,2)
         e_ti = math_ops.matmul(math_ops.matmul(image_subfeatures,f_att_matrix_tile),h)
         # e_ti = self.f_att(image_subfeatures,subfeature_length,h,scope)
         alpha_ti = nn_ops.softmax(e_ti)
