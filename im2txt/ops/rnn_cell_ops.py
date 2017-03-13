@@ -364,7 +364,7 @@ class BasicLSTMCell(RNNCell):
         print(f_att_matrix_tile)
         tf.Print(f_att_matrix,[f_att_matrix])
         h=tf.expand_dims(h,2)
-        e_ti = math_ops.matmul(math_ops.matmul(image_subfeatures,f_att_matrix_tile),h)
+        e_ti = math_ops.matmul(math_ops.matmul(tf.sigmoid(image_subfeatures),f_att_matrix_tile),h)
         # e_ti = self.f_att(image_subfeatures,subfeature_length,h,scope)
         alpha_ti = nn_ops.softmax(e_ti)
         # z_i = math_ops.reduce_sum(math_ops.matmul(tf.transpose(image_subfeatures,[0,2,1]),alpha_ti),axis=1)
