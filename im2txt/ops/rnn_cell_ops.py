@@ -343,6 +343,8 @@ class BasicLSTMCell(RNNCell):
       tensorShape=tf.shape(inputs)
       # z_i = array_ops.zeros([batch_size,subfeature_length])
       z_i=array_ops.zeros(tf.pack([tensorShape[0],tensorShape[1]]))
+      print('inputs.')
+      print(inputs)
       print("z_i:")
       print(z_i)
       state_length = self._num_units
