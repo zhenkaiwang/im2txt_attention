@@ -400,7 +400,7 @@ class ShowAndTellModel(object):
 		
 		lstm_outputs, state_tuple = lstm_cell(
 			inputs=tf.squeeze(self.inputs_wa, squeeze_dims=[1]),
-			state=state_tuple,scope=lstm_scope)
+			state=state_tuple)
 
 		# Concatentate the resulting state.
 		#tf.concat(state_tuple, 1, name="state")
