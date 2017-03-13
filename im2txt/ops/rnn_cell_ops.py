@@ -358,10 +358,10 @@ class BasicLSTMCell(RNNCell):
         alpha_ti = nn_ops.softmax(e_ti)
         # z_i = math_ops.reduce_sum(math_ops.matmul(tf.transpose(image_subfeatures,[0,2,1]),alpha_ti),axis=1)
         z_i = math_ops.matmul(tf.transpose(image_subfeatures,[0,2,1]),alpha_ti)
-        print(tf.shape(z_i))
+        print(z_i)
         z_i=tf.squeeze(z_i,squeeze_dims=[2])
         print("squeezed")
-        print(tf.shape(z_i))
+        print(z_i)
 
 
       concat = _linear([word_imbeddings, h, z_i], 4 * self._num_units, True) ###
