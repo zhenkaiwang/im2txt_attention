@@ -44,6 +44,7 @@ from __future__ import print_function
 
 import collections
 import math
+import tensorflow as tf
 
 from tensorflow.python.framework import ops
 from tensorflow.python.framework import tensor_shape
@@ -63,6 +64,7 @@ from tensorflow.python.util import nest
 from tensorflow.python.ops.rnn_cell import RNNCell
 
 from tensorflow.python.ops import nn_ops 
+
 
 def _state_size_with_prefix(state_size, prefix=None):
   """Helper function that enables int or TensorShape shape specification.
