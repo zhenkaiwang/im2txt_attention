@@ -313,10 +313,10 @@ class ShowAndTellModel(object):
 	# shape_sub_list= self.image_sub_features.get_shape().as_list()
         batch_size1,padded_length_num,embedding_size=self.seq_embeddings.get_shape()
         print("batch_size1 ")
-        print(batch_size.value)
+        print(batch_size1.value)
         batch_size2, sub_feature_num, sub_feature_length = self.image_sub_features.get_shape()
         print("batch_size2 ")
-        print(batch_size.value)
+        print(batch_size2.value)
 
 	shape_sub=tf.shape(self.image_sub_features)
 	shape_seq=tf.shape(self.seq_embeddings)
