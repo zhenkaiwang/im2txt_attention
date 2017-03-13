@@ -323,14 +323,14 @@ class BasicLSTMCell(RNNCell):
         c, h = array_ops.split(1, 2, state)
       ## seperate inputs into word imbedding and image subfeatures
 
-      shape = inputs.get_shape()
+      shape = inputs.get_shape().as_list()
       print("shape ")
       print(shape)
-      batch_size = shape[0].value
+      batch_size = shape[0]
       print("batch_size ")
       print(batch_size)
       #padded_length = shape[1].value
-      single_input_length = shape[1].value
+      single_input_length = shape[1]
       print("single_input_length ")
       print(single_input_length)
       word_imbedding_length = 512
