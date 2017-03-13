@@ -42,6 +42,7 @@ class ShowAndTellModel(object):
   """
 
   def __init__(self, config, mode, train_inception=False):
+    print("__init__")
 	"""Basic setup.
 
 	Args:
@@ -111,6 +112,7 @@ class ShowAndTellModel(object):
 	return self.mode == "train"
 
   def process_image(self, encoded_image, thread_id=0):
+    print("process_image")
 	"""Decodes and processes an image string.
 
 	Args:
@@ -129,6 +131,7 @@ class ShowAndTellModel(object):
 										  image_format=self.config.image_format)
 
   def build_inputs(self):
+    print("build_inputs")
 	"""Input prefetching, preprocessing and batching.
 
 	Outputs:
@@ -225,6 +228,7 @@ class ShowAndTellModel(object):
 
 
   def build_image_embeddings(self):
+    println("build_image_embeddings")
 	"""Builds the image model subgraph and generates image embeddings.
 
 	Inputs:
@@ -258,6 +262,7 @@ class ShowAndTellModel(object):
 
 
   def build_seq_embeddings(self):
+    print("build_seq_embeddings")
 	"""Builds the input sequence embeddings.
 
 	Inputs:
@@ -276,6 +281,7 @@ class ShowAndTellModel(object):
 	self.seq_embeddings = seq_embeddings
 
   def build_inputs_wa(self):
+    print("build_inputs_wa")
 	# size1=tf.shape(self.seq_embeddings)
  #        size2=tf.shape(self.image_sub_features)
 	# padded_length = size1[1]
@@ -317,6 +323,7 @@ class ShowAndTellModel(object):
 
 
   def build_model(self):
+    print("build_model")
 	"""Builds the model.
 
 	Inputs:
@@ -434,6 +441,7 @@ class ShowAndTellModel(object):
 	  self.target_cross_entropy_loss_weights = weights  # Used in evaluation.
 
   def setup_inception_initializer(self):
+    print(setup_inception_initializer)
 	"""Sets up the function to restore inception variables from checkpoint."""
 	if self.mode != "inference":
 	  # Restore inception variables only.
@@ -447,6 +455,7 @@ class ShowAndTellModel(object):
 	  self.init_fn = restore_fn
 
   def setup_global_step(self):
+    print("setup_global_step")
 	"""Sets up the global step Tensor."""
 	global_step = tf.Variable(
 		initial_value=0,
