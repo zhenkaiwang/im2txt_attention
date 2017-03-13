@@ -306,8 +306,8 @@ class BasicLSTMCell(RNNCell):
 
   def f_att(self,image_subfeatures,subfeature_length,h,scope):
     state_length = self._num_units
-    with vs.variable_scope(scope or type(self).__name__):
-      f_att_matrix = vs.get_variable(name="f_att_matrix",shape = (subfeature_length,state_length), initializer=tf.contrib.layers.xavier_initializer())
+    # with vs.variable_scope(scope or type(self).__name__,initializer=self._initializer):
+    f_att_matrix = vs.get_variable(name="f_att_matrix",shape = (subfeature_length,state_length), initializer=tf.contrib.layers.xavier_initializer())
     e_ti = math_ops.matmul(math_ops.matmul(image_subfeatures,f_att_matrix),h)
     return e_ti
 
