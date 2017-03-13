@@ -302,7 +302,7 @@ class BasicLSTMCell(RNNCell):
   def output_size(self):
     return self._num_units
 
-  def f_att(image_subfeatures,subfeature_length,h,scope):
+  def f_att(self,image_subfeatures,subfeature_length,h,scope):
     state_length = self._num_units
     with vs.variable_scope(scope or "F_att"):
       f_att_matrix = vs.get_variable(name="f_att_matrix",shape = (subfeature_length,state_length), initializer=tf.contrib.layers.xavier_initializer())
