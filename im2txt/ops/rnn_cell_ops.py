@@ -326,15 +326,15 @@ class BasicLSTMCell(RNNCell):
       ## seperate inputs into word imbedding and image subfeatures
 
       shape = inputs.get_shape().as_list()
-      print("shape ")
-      print(shape)
+      # print("shape ")
+      # print(shape)
       batch_size = shape[0]
-      print("batch_size ")
-      print(batch_size)
+      # print("batch_size ")
+      # print(batch_size)
       #padded_length = shape[1].value
       single_input_length = shape[1]
-      print("single_input_length ")
-      print(single_input_length)
+      # print("single_input_length ")
+      # print(single_input_length)
       word_imbedding_length = 512
       subfeature_length = 192#(single_input_length-word_imbedding_length)/subfeature_num;
       subfeature_num = int((single_input_length-word_imbedding_length)/subfeature_length)
@@ -357,7 +357,10 @@ class BasicLSTMCell(RNNCell):
         # e_ti = self.f_att(image_subfeatures,subfeature_length,h,scope)
         alpha_ti = nn_ops.softmax(e_ti)
         z_i = math_ops.reduce_sum(math_ops.matmul(tf.transpose(image_subfeatures,[0,2,1]),alpha_ti),axis=1)
-        z_i=tf.squeeze(z_i,squeeze_dims=[-1])
+        print(tf.shape(z_i))
+        z_i=tf.squeeze(z_i,squeeze_dims=[2])
+        print("squeezed")
+        print(tf.shape(z_i))
 
 
       concat = _linear([word_imbeddings, h, z_i], 4 * self._num_units, True) ###
