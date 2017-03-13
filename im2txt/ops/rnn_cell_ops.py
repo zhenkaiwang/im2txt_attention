@@ -362,7 +362,7 @@ class BasicLSTMCell(RNNCell):
         print(f_att_matrix)
         print(f_att_matrix_exp)
         print(f_att_matrix_tile)
-        tf.Print(f_att_matrix)
+        tf.Print(f_att_matrix,[f_att_matrix])
         h=tf.expand_dims(h,2)
         e_ti = math_ops.matmul(math_ops.matmul(image_subfeatures,f_att_matrix_tile),h)
         # e_ti = self.f_att(image_subfeatures,subfeature_length,h,scope)
