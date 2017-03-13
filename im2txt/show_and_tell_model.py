@@ -42,7 +42,7 @@ class ShowAndTellModel(object):
   """
 
   def __init__(self, config, mode, train_inception=False):
-    print("__init__")
+  print("__init__")
 	"""Basic setup.
 
 	Args:
