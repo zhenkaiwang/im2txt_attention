@@ -104,23 +104,33 @@ class ShowAndTellModel(object):
 
   def get_inputs(self):
 	size1=tf.shape(self.seq_embeddings)
+        size2=tf.shape(self.image_sub_features)
 	padded_length = size1[1]
+        _,padded_length_num,embedding_size=self.seq_embeddings.get_shape()
 	batch_size, sub_feature_num, sub_feature_length = self.image_sub_features.get_shape()
 	# generate RNN input: word feature + local features
-	output = tf.zeros([batch_size, padded_length, 
-	embedding_size + sub_feature_num * sub_feature_length], tf.float32)
+	output = tf.zeros([size1[0], size1[1],size1[2] + size2[1]*size2[2]], tf.float32)
 	index=0
-	while_condition=lambda i: tf.less(i,padded_length)
-	def body(i):
-		output[img][index] = tf.concat([tf.reshape(self.seq_embeddings[img][pad], [-1]),
-				   tf.reshape(self.image_sub_features[img], [-1])])
+	def while_condition(i,index,img):
+            return tf.less(i,padded_length)
+	def _body(i,index,img):
+                sess2 = tf.Session()
+		
+		print("img")
+                print(img)
+		print(sess2.run(img))
+                print("index")
+                print(index)
+		output[img][index] = tf.concat([tf.reshape(self.seq_embeddings[img][index], [1,-1]), tf.reshape(self.image_sub_features[img], [1,-1])],1)
 		index=index+1
 		return [tf.add(i,1)]
 
 	for img in range(batch_size):
+                print("img for_loop")
+                print(img)
 		i = tf.constant(0)
 		index=0
-		r=tf.while_loop(while_condition,body,[i])
+		r=tf.while_loop(while_condition,_body,[i,index,img])
 	return output
 
 
