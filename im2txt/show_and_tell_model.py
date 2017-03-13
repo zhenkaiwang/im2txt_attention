@@ -113,7 +113,9 @@ class ShowAndTellModel(object):
         print(tf.shape(self.seq_embeddings)[2])
         '''
         size1=tf.shape(self.seq_embeddings)
-	batch_size=size1[0]
+        print("size1 is : ")        
+        tf.Print(size1,[size1])	
+        batch_size=size1[0]
         padded_length=size1[1]
         embedding_size=size1[2]
         size2=tf.shape(self.image_sub_features)
@@ -122,8 +124,8 @@ class ShowAndTellModel(object):
 	#batch_size, padded_length, embedding_size = tf.shape(self.seq_embeddings)
 	#batch_size, sub_feature_num, sub_feature_length = tf.shape(self.image_sub_features)
 	# generate RNN input: word feature + local features
-	output = tf.zeros([batch_size, padded_length, embedding_size + sub_feature_length * sub_feature_num], tf.float32)
-	
+	#output = tf.zeros([batch_size, padded_length, embedding_size + sub_feature_length * sub_feature_num], tf.float32)
+	'''
 	for img in range(batch_size):
 		# for each image in batch_size
 		for pad in range(padded_length):
@@ -133,8 +135,13 @@ class ShowAndTellModel(object):
 	print(self.image_sub_features.get_shape())
 	print('output shape:')
 	print(output.get_shape())
-
-
+        '''
+        reshaped_image_sub=tf.reshape(self.image_sub_features,[32,-1,1])
+        image_tile=tf.tile(reshaped_image_sub,[tf.constant(1),padded_length,tf.constant(1)])
+        print(image_tile)
+        print("reshaped image")
+        print(reshaped_image_sub)
+        output=tf.concat([self.seq_embeddings,image_tile],2)
 	#tf.concat([self.seq_embeddings, tf.reshape(self.image_sub_features,[batch_size, 1, -1])], 2)
 	return output
 
