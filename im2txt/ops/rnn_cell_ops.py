@@ -336,6 +336,8 @@ class BasicLSTMCell(RNNCell):
       word_imbedding_length = 512
       subfeature_length = 192#(single_input_length-word_imbedding_length)/subfeature_num;
       subfeature_num = (single_input_length-word_imbedding_length)/subfeature_length
+      #batch_size_ops
+      batch_size=32
       z_i = array_ops.zeros([batch_size,subfeature_length])
       word_imbeddings=inputs[:,0:word_imbedding_length]
       if single_input_length != word_imbedding_length:
