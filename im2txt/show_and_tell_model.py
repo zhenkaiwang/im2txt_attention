@@ -324,7 +324,7 @@ class ShowAndTellModel(object):
         # image_sub_reshaped=tf.reshape(self.image_sub_features,[self.config.batch_size,1,-1])
         if self.mode=="inference":
           image_sub_reshaped=tf.reshape(self.image_sub_features,[1,1,-1])
-          image_sub_tile=tf.tile(image_sub_reshaped,tf.pack([3,shape_seq[1],1]))
+          image_sub_tile=tf.tile(image_sub_reshaped,tf.pack([1,shape_seq[1],1]))
         else:
           image_sub_reshaped=tf.reshape(self.image_sub_features,[self.config.batch_size,1,-1])
           image_sub_tile=tf.tile(image_sub_reshaped,tf.pack([1,shape_seq[1],1]))
