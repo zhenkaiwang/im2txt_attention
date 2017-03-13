@@ -1,26 +1,14 @@
-# Copyright 2016 The TensorFlow Authors. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
-r"""Generate captions for images using default beam search parameters."""
+
 
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
 import math
-import os
+import os, os.path
+import json
 
+import imghdr
 
 import tensorflow as tf
 
@@ -39,6 +27,10 @@ tf.flags.DEFINE_string("input_files", "",
                        "File pattern or comma-separated list of file patterns "
                        "of image files.")
 
+img_dir = '/home/superNLP/usb_hdd/cocodata/raw-data/val2014/'
+dict_dir = '/home/superNLP/usb_hdd/cocodata/raw-data/annotations/captions_val2014_filename_id.json'
+output_dir = 'captions_val2014_showandtell_results.json'
+
 
 def main(_):
   # Build the inference graph.
@@ -52,11 +44,12 @@ def main(_):
   # Create the vocabulary.
   vocab = vocabulary.Vocabulary(FLAGS.vocab_file)
 
+  '''
   filenames = []
   for file_pattern in FLAGS.input_files.split(","):
     filenames.extend(tf.gfile.Glob(file_pattern))
   tf.logging.info("Running caption generation on %d files matching %s",
-                  len(filenames), FLAGS.input_files)
+                  len(filenames), FLAGS.input_files)'''
 
   with tf.Session(graph=g) as sess:
     # Load the model from checkpoint.
@@ -67,17 +60,42 @@ def main(_):
     # available beam search parameters.
     generator = caption_generator.CaptionGenerator(model, vocab)
 
-    for filename in filenames:
-      with tf.gfile.GFile(filename, "r") as f:
-        image = f.read()
-      captions = generator.beam_search(sess, image)
-      print("Captions for image %s:" % os.path.basename(filename))
-      for i, caption in enumerate(captions):
-        # Ignore begin and end words.
-        sentence = [vocab.id_to_word(w) for w in caption.sentence[1:-1]]
-        sentence = " ".join(sentence)
-        print("  %d) %s (p=%f)" % (i, sentence, math.exp(caption.logprob)))
-
-
+    imgId_cap = []
+    dict_file = open(dict_dir, 'r')
+    dict_data = json.load(dict_file)
+    num = 0
+    output_file = open(output_dir,"w")
+    for filename in os.listdir(img_dir):
+      #filename="COCO_val2014_000000320612.jpg"
+      print(img_dir+filename, 'filepath')
+      print(num)
+      num += 1
+      #if num>20:
+      #    break
+      if(filename != '.' and filename != '..'):
+          #filename="/home/superNLP/usb_hdd/cocodata/"
+          with tf.gfile.GFile(img_dir+filename, "r") as f:
+            image = f.read()
+          '''
+          if False:#imghdr.what(img_dir+filename)!='jpeg':
+              pngCount=pngCount+1
+              print("wrong format :",imghdr.what(img_dir+filename))
+              print("pngCount :",pngCount)
+          else:
+          '''
+          captions = generator.beam_search(sess, image)
+          #print("Captions for image %s:" % os.path.basename(filename))
+          for i, caption in enumerate(captions):
+            # Ignore begin and end words.
+            sentence = [vocab.id_to_word(w) for w in caption.sentence[1:-1]]
+            sentence = " ".join(sentence)
+            print('caption predicted:', sentence)
+            #print("  %d) %s (p=%f)" % (i, sentence, math.exp(caption.logprob)))
+            temp = {}
+            temp["image_id"] = dict_data[filename]
+            temp["caption"] = sentence[0:len(sentence)-2]
+            imgId_cap.append(temp)
+            break
+    output_file.write(json.dumps(imgId_cap))
 if __name__ == "__main__":
   tf.app.run()
