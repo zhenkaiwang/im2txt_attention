@@ -170,12 +170,10 @@ class CaptionGenerator(object):
       input_feed = np.array([c.sentence[-1] for c in partial_captions_list])
       state_feed = np.array([c.state for c in partial_captions_list])
       print("inference step start")
-      # softmax, new_states, metadata = self.model.inference_step(sess,
-      #                                                           input_feed,
-      #                                                           state_feed)
       softmax, new_states, metadata = self.model.inference_step(sess,
                                                                 input_feed,
-                                                                state_feed, encoded_image)
+                                                                state_feed)
+      initial_state = self.model.feed_image(sess, encoded_image)
       print("inference step done")
       for i, partial_caption in enumerate(partial_captions_list):
         word_probabilities = softmax[i]
