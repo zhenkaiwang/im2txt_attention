@@ -350,7 +350,8 @@ class BasicLSTMCell(RNNCell):
         image_subfeatures=inputs[:,word_imbedding_length:single_input_length]
         #net2 = tf.reshape(net2, [shape2[0].value, -1, shape2[3].value])
         image_subfeatures=array_ops.reshape(image_subfeatures,[batch_size,subfeature_num,subfeature_length])
-        e_ti = math_ops.matmul(math_ops.matmul(image_subfeatures,f_att_matrix),h)
+        f_att_matrix_tile=tf.tile(f_att_matrix,tf.pack([batch_size,1,1]))
+        e_ti = math_ops.matmul(math_ops.matmul(image_subfeatures,f_att_matrix_tile),h)
         # e_ti = self.f_att(image_subfeatures,subfeature_length,h,scope)
         alpha_ti = nn_ops.softmax(e_ti)
         z_i = self.get_z(image_subfeatures,alpha_ti)
