@@ -114,7 +114,7 @@ class CaptionGenerator(object):
   def __init__(self,
                model,
                vocab,
-               beam_size=3,
+               beam_size=1,
                max_caption_length=20,
                length_normalization_factor=0.0):
     """Initializes the generator.
