@@ -151,7 +151,7 @@ class CaptionGenerator(object):
     # Feed in the image to get the initial state.
     print("enter beam search")
     initial_state = self.model.feed_image(sess, encoded_image)
-
+    print("feed image done")
     initial_beam = Caption(
         sentence=[self.vocab.start_id],
         state=initial_state[0],
