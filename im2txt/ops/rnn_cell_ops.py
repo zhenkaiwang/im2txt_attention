@@ -329,7 +329,7 @@ class BasicLSTMCell(RNNCell):
       # print("shape ")
       # print(shape)
       batch_size = shape[0]
-      print("batch_size ")
+      print("inputs.get_shape[0]")
       print(batch_size)
       #padded_length = shape[1].value
       single_input_length = shape[1]
@@ -341,8 +341,8 @@ class BasicLSTMCell(RNNCell):
       #batch_size_ops
       # batch_size=32
       tensorShape=tf.shape(inputs)
-      z_i = array_ops.zeros([batch_size,subfeature_length])
-      # z_i=array_ops.zeros([tensorShape[0],tensorShape[1]])
+      # z_i = array_ops.zeros([batch_size,subfeature_length])
+      z_i=array_ops.zeros(tf.pack([tensorShape[0],tensorShape[1]]))
       state_length = self._num_units
       # with vs.variable_scope(scope or type(self).__name__,initializer=self._initializer):
       f_att_matrix = vs.get_variable(name="f_att_matrix",shape = (subfeature_length,state_length), initializer=tf.contrib.layers.xavier_initializer(),dtype=tf.float32)

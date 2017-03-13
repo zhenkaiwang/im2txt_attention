@@ -324,7 +324,7 @@ class ShowAndTellModel(object):
         # image_sub_reshaped=tf.reshape(self.image_sub_features,[self.config.batch_size,1,-1])
         if self.mode=="inference":
           image_sub_reshaped=tf.reshape(self.image_sub_features,[1,1,-1])
-          image_sub_tile=tf.tile(image_sub_reshaped,tf.pack([1,shape_seq[1],1]))
+          image_sub_tile=tf.tile(image_sub_reshaped,tf.pack([shape_seq[0],shape_seq[1],1]))
         else:
           image_sub_reshaped=tf.reshape(self.image_sub_features,[self.config.batch_size,1,-1])
           image_sub_tile=tf.tile(image_sub_reshaped,tf.pack([1,shape_seq[1],1]))
@@ -390,12 +390,13 @@ class ShowAndTellModel(object):
 		state_tuple = tf.split(split_dim=1,num_split=2,value=state_feed)
 
 		# Run a single LSTM step.
+		print("self.seq_embeddings:")
 		print(self.seq_embeddings)
 		# inputs_wa = self.get_inputs()
 		
 		lstm_outputs, state_tuple = lstm_cell(
 			inputs=tf.squeeze(self.inputs_wa, squeeze_dims=[1]),
-			state=state_tuple)
+			state=state_tuple,scope=lstm_scope)
 
 		# Concatentate the resulting state.
 		#tf.concat(state_tuple, 1, name="state")
