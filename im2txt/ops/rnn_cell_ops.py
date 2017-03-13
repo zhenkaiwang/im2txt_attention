@@ -362,6 +362,7 @@ class BasicLSTMCell(RNNCell):
         print(f_att_matrix)
         print(f_att_matrix_exp)
         print(f_att_matrix_tile)
+        tf.Print(f_att_matrix)
         h=tf.expand_dims(h,2)
         e_ti = math_ops.matmul(math_ops.matmul(image_subfeatures,f_att_matrix_tile),h)
         # e_ti = self.f_att(image_subfeatures,subfeature_length,h,scope)
@@ -578,7 +579,6 @@ class LSTMCell(RNNCell):
             "W_I_diag", shape=[self._num_units], dtype=dtype)
         w_o_diag = vs.get_variable(
             "W_O_diag", shape=[self._num_units], dtype=dtype)
-        tf.Print(w_f_diag)
 
       if self._use_peepholes:
         c = (sigmoid(f + self._forget_bias + w_f_diag * c_prev) * c_prev +
