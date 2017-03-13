@@ -343,9 +343,9 @@ class BasicLSTMCell(RNNCell):
       tensorShape=tf.shape(inputs)
       z_i = array_ops.zeros([batch_size,subfeature_length])
       # z_i=array_ops.zeros(tf.pack([tensorShape[0],tensorShape[1]]))
-      print('inputs.')
+      print('inputs:')
       print(inputs)
-      print("z_i:")
+      print("Initial z_i:")
       print(z_i)
       state_length = self._num_units
       # with vs.variable_scope(scope or type(self).__name__,initializer=self._initializer):
@@ -370,9 +370,9 @@ class BasicLSTMCell(RNNCell):
         # z_i = math_ops.reduce_sum(math_ops.matmul(tf.transpose(image_subfeatures,[0,2,1]),alpha_ti),axis=1)
         z_i = math_ops.matmul(tf.transpose(image_subfeatures,[0,2,1]),alpha_ti)
         h=tf.squeeze(h,[2])
-        print(z_i)
+        # print(z_i)
         z_i=tf.squeeze(z_i,squeeze_dims=[2])
-        print("squeezed")
+        print("squeezed z_i")
         print(z_i)
 
 
