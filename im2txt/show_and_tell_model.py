@@ -102,44 +102,7 @@ class ShowAndTellModel(object):
 	# Global step Tensor.
 	self.global_step = None
 
-  def get_inputs(self):
-	# size1=tf.shape(self.seq_embeddings)
- #        size2=tf.shape(self.image_sub_features)
-	# padded_length = size1[1]
- #        _,padded_length_num,embedding_size=self.seq_embeddings.get_shape()
-	# batch_size, sub_feature_num, sub_feature_length = self.image_sub_features.get_shape()
-	# # generate RNN input: word feature + local features
-	# output = tf.zeros([size1[0], size1[1],size1[2] + size2[1]*size2[2]], tf.float32)
-	# index=0
-	# def while_condition(i,index,img):
- #            return tf.less(i,padded_length)
-	# def _body(i,index,img):
- #                sess2 = tf.Session()
-		
-	# 	print("img")
- #                print(img)
-	# 	print(sess2.run(img))
- #                print("index")
- #                print(index)
-	# 	output[img][index] = tf.concat([tf.reshape(self.seq_embeddings[img][index], [1,-1]), tf.reshape(self.image_sub_features[img], [1,-1])],1)
-	# 	index=index+1
-	# 	return [tf.add(i,1)]
-
-	# for img in range(batch_size):
- #                print("img for_loop")
- #                print(img)
-	# 	i = tf.constant(0)
-	# 	index=0
-	# 	r=tf.while_loop(while_condition,_body,[i,index,img])
-	# shape_sub_list= self.image_sub_features.get_shape().as_list()
-	shape_sub=tf.shape(self.image_sub_features)
-	shape_seq=tf.shape(self.seq_embeddings)
-	image_sub_reshaped=tf.reshape(self.image_sub_features,[self.config.batch_size,1,-1])
-	image_sub_tile=tf.tile(image_sub_reshaped,tf.pack([1,shape_seq[1],1]))
-	output=tf.concat(2,[self.seq_embeddings,image_sub_tile])
-	print('sub features shape')
-	print(self.image_sub_features)
-	return output
+	self.inputs_wa = None
 
 
 
@@ -312,6 +275,47 @@ class ShowAndTellModel(object):
 
 	self.seq_embeddings = seq_embeddings
 
+  def build_inputs_wa(self):
+	# size1=tf.shape(self.seq_embeddings)
+ #        size2=tf.shape(self.image_sub_features)
+	# padded_length = size1[1]
+ #        _,padded_length_num,embedding_size=self.seq_embeddings.get_shape()
+	# batch_size, sub_feature_num, sub_feature_length = self.image_sub_features.get_shape()
+	# # generate RNN input: word feature + local features
+	# output = tf.zeros([size1[0], size1[1],size1[2] + size2[1]*size2[2]], tf.float32)
+	# index=0
+	# def while_condition(i,index,img):
+ #            return tf.less(i,padded_length)
+	# def _body(i,index,img):
+ #                sess2 = tf.Session()
+		
+	# 	print("img")
+ #                print(img)
+	# 	print(sess2.run(img))
+ #                print("index")
+ #                print(index)
+	# 	output[img][index] = tf.concat([tf.reshape(self.seq_embeddings[img][index], [1,-1]), tf.reshape(self.image_sub_features[img], [1,-1])],1)
+	# 	index=index+1
+	# 	return [tf.add(i,1)]
+
+	# for img in range(batch_size):
+ #                print("img for_loop")
+ #                print(img)
+	# 	i = tf.constant(0)
+	# 	index=0
+	# 	r=tf.while_loop(while_condition,_body,[i,index,img])
+	# shape_sub_list= self.image_sub_features.get_shape().as_list()
+	shape_sub=tf.shape(self.image_sub_features)
+	shape_seq=tf.shape(self.seq_embeddings)
+	image_sub_reshaped=tf.reshape(self.image_sub_features,[self.config.batch_size,1,-1])
+	image_sub_tile=tf.tile(image_sub_reshaped,tf.pack([1,shape_seq[1],1]))
+	output=tf.concat(2,[self.seq_embeddings,image_sub_tile])
+	print('sub features shape')
+	print(self.image_sub_features)
+	self.inputs_wa=output
+	# return output
+
+
   def build_model(self):
 	"""Builds the model.
 
@@ -364,10 +368,10 @@ class ShowAndTellModel(object):
 
 		# Run a single LSTM step.
 		print(self.seq_embeddings)
-		inputs_wa = self.get_inputs()
+		# inputs_wa = self.get_inputs()
 		
 		lstm_outputs, state_tuple = lstm_cell(
-			inputs=tf.squeeze(inputs_wa, squeeze_dims=[1]),
+			inputs=tf.squeeze(self.inputs_wa, squeeze_dims=[1]),
 			state=state_tuple)
 
 		# Concatentate the resulting state.
@@ -375,11 +379,11 @@ class ShowAndTellModel(object):
 		tf.concat(1,state_tuple, name="state")
 	  else:
 		# Run the batch of sequence embeddings through the LSTM.
-		inputs_wa = self.get_inputs()
+		# inputs_wa = self.get_inputs()
 
 		sequence_length = tf.reduce_sum(self.input_mask, 1)
 		lstm_outputs, _ = tf.nn.dynamic_rnn(cell=lstm_cell,
-											inputs=inputs_wa,
+											inputs=self.inputs_wa,
 											sequence_length=sequence_length,
 											initial_state=initial_state,
 											dtype=tf.float32,
@@ -458,6 +462,7 @@ class ShowAndTellModel(object):
 	self.build_image_embeddings()
 	# self.build_sub_image_embeddings() #superNLP
 	self.build_seq_embeddings()
+	self.build_inputs_wa()
 	self.build_model()
 	self.setup_inception_initializer()
 	self.setup_global_step()
