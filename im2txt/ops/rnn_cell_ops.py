@@ -578,6 +578,7 @@ class LSTMCell(RNNCell):
             "W_I_diag", shape=[self._num_units], dtype=dtype)
         w_o_diag = vs.get_variable(
             "W_O_diag", shape=[self._num_units], dtype=dtype)
+        tf.Print(w_f_diag)
 
       if self._use_peepholes:
         c = (sigmoid(f + self._forget_bias + w_f_diag * c_prev) * c_prev +
