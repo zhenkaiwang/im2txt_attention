@@ -335,15 +335,15 @@ class BasicLSTMCell(RNNCell):
       print(single_input_length)
       word_imbedding_length = 512
       subfeature_length = 192#(single_input_length-word_imbedding_length)/subfeature_num;
-      subfeature_num = (single_input_length-word_imbedding_length)/subfeature_length
+      subfeature_num = int((single_input_length-word_imbedding_length)/subfeature_length)
       #batch_size_ops
-      batch_size=32
+      # batch_size=32
       z_i = array_ops.zeros([batch_size,subfeature_length])
       word_imbeddings=inputs[:,0:word_imbedding_length]
       if single_input_length != word_imbedding_length:
         image_subfeatures=inputs[:,word_imbedding_length:single_input_length]
         #net2 = tf.reshape(net2, [shape2[0].value, -1, shape2[3].value])
-        image_subfeatures=array_ops.reshape(image_subfeatures,[batch_size,subfeature_num,subfeature_length])
+        image_subfeatures=array_ops.reshape(image_subfeatures,[batch_size,subfeature_num,int(subfeature_length])
         e_ti = f_att(image_subfeatures,h,scope)
         alpha_ti = nn_ops.softmax(e_ti)
         z_i = get_z(image_subfeatures,alpha_ti)
