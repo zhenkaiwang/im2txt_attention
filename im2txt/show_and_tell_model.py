@@ -483,19 +483,19 @@ class ShowAndTellModel(object):
   def setup_global_step(self):
         print("setup_global_step")
 	"""Sets up the global step Tensor."""
-    global_step = tf.Variable(
-        initial_value=0,
-        name="global_step",
-        trainable=False,
-        collections=[tf.GraphKeys.GLOBAL_STEP, tf.GraphKeys.GLOBAL_VARIABLES])
-    with vs.variable_scope("lstm/BasicLSTMCell",reuse=True):
-        W1 = vs.get_variable(name="w1")
-        W2 = vs.get_variable(name="w2")
-        b1 = vs.get_variable(name="b1")
-        b2 = vs.get_variable(name="b2") 
-        sess = tf.Session()
-        print(sess.run([W1,W2,b1,b2]))
-        sess.close()
+	global_step = tf.Variable(
+       	initial_value=0,
+       	name="global_step",
+       	trainable=False,
+       	collections=[tf.GraphKeys.GLOBAL_STEP, tf.GraphKeys.GLOBAL_VARIABLES])
+    	with vs.variable_scope("lstm/BasicLSTMCell",reuse=True):
+        	W1 = vs.get_variable(name="w1")
+        	W2 = vs.get_variable(name="w2")
+        	b1 = vs.get_variable(name="b1")
+        	b2 = vs.get_variable(name="b2") 
+        	sess = tf.Session()
+        	print(sess.run([W1,W2,b1,b2]))
+        	sess.close()
 
 	self.global_step = global_step
 
