@@ -337,7 +337,8 @@ class BasicLSTMCell(RNNCell):
       # print(single_input_length)
       word_imbedding_length = 512
       subfeature_length = 192#(single_input_length-word_imbedding_length)/subfeature_num;
-      subfeature_num = int((single_input_length-word_imbedding_length)/subfeature_length)
+      # subfeature_num = int((single_input_length-word_imbedding_length)/subfeature_length)
+      subfeature_num = 35*35
       #batch_size_ops
       # batch_size=32
       tensorShape=tf.shape(inputs)
@@ -349,22 +350,32 @@ class BasicLSTMCell(RNNCell):
       print(z_i)
       state_length = self._num_units
       # with vs.variable_scope(scope or type(self).__name__,initializer=self._initializer):
-      f_att_matrix = vs.get_variable(name="f_att_matrix",shape = (subfeature_length,state_length), initializer=tf.contrib.layers.xavier_initializer(),dtype=tf.float32)
-        
+      #f_att_matrix = vs.get_variable(name="f_att_matrix",shape = (subfeature_length,state_length), initializer=tf.contrib.layers.xavier_initializer(),dtype=tf.float32)
+      mid_layer_size = 300
+      W1 = vs.get_variable(name="w1",shape=(word_imbedding_length+subfeature_length,mid_layer_size),initializer=tf.contrib.layers.xavier_initializer(),dtype=tf.float32)
+      W2 = vs.get_variable(name="w2",shape=(mid_layer_size,1),initializer=tf.contrib.layers.xavier_initializer(),dtype=tf.float32)
+      b1 = vs.get_variable(name="b1",shape=(1,mid_layer_size),initializer=tf.zeros_initializer(),dtype=tf.float32)
+      b2 = vs.get_variable(name="b2",shape=(1,1),initializer=tf.zeros_initializer(),dtype=tf.float32)  
       word_imbeddings=inputs[:,0:word_imbedding_length]
       if single_input_length != word_imbedding_length:
         image_subfeatures=inputs[:,word_imbedding_length:single_input_length]
         #net2 = tf.reshape(net2, [shape2[0].value, -1, shape2[3].value])
         image_subfeatures=array_ops.reshape(image_subfeatures,[batch_size,subfeature_num,subfeature_length])
-        f_att_matrix_exp=tf.expand_dims(f_att_matrix,0)
-        f_att_matrix_tile=tf.tile(f_att_matrix_exp,tf.pack([batch_size,1,1]))
-        print("fatt,fatt_exp,fatt_tile")
-        print(f_att_matrix)
-        print(f_att_matrix_exp)
-        print(f_att_matrix_tile)
-        tf.Print(f_att_matrix,[f_att_matrix])
-        h=tf.expand_dims(h,2)
-        e_ti = math_ops.matmul(math_ops.matmul(tf.sigmoid(image_subfeatures),f_att_matrix_tile),h)
+        # f_att_matrix_exp=tf.expand_dims(f_att_matrix,0)
+        # f_att_matrix_tile=tf.tile(f_att_matrix_exp,tf.pack([batch_size,1,1]))
+        # print("fatt,fatt_exp,fatt_tile")
+        # print(f_att_matrix)
+        # print(f_att_matrix_exp)
+        # print(f_att_matrix_tile)
+        # tf.Print(f_att_matrix,[f_att_matrix])
+        # h=tf.expand_dims(h,2)
+        # e_ti = math_ops.matmul(math_ops.matmul(tf.sigmoid(image_subfeatures),f_att_matrix_tile),h)
+        e_ti =array_ops.zeros([batch_size,subfeature_num])
+        for i in range(subfeature_num):
+          x1 = tf.concat(1,[word_imbeddings,tf.squuze(image_subfeatures[:,i,:],squeeze_dims=[1])])
+          x2 = tf.tanh(math_ops.matmul(x1,W1)+b1)
+          x3 = tf.tanh(math_ops.matmul(x2,W2)+b2)
+          e_ti[:,i] = x3[:,1]
         # e_ti = self.f_att(image_subfeatures,subfeature_length,h,scope)
         alpha_ti = nn_ops.softmax(e_ti)
         # z_i = math_ops.reduce_sum(math_ops.matmul(tf.transpose(image_subfeatures,[0,2,1]),alpha_ti),axis=1)

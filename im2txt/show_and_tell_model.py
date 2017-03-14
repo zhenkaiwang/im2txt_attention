@@ -29,6 +29,7 @@ import tensorflow as tf
 from im2txt.ops import image_embedding
 from im2txt.ops import image_processing
 from im2txt.ops import inputs as input_ops
+from tensorflow.python.ops import variable_scope as vs
 #RNNCELL
 from im2txt.ops import rnn_cell_ops
 
@@ -449,9 +450,10 @@ class ShowAndTellModel(object):
 	  #tf.losses.add_loss(batch_loss)
 	  tf.contrib.losses.add_loss(batch_loss)
 	  #total_loss = tf.losses.get_total_loss()
-	  with tf.variable_scope("BasicLSTMCell",reuse=True) as fattscope:
-	  	fatt=tf.get_variable(name="f_att_matrix")
-	  total_loss = tf.contrib.losses.get_total_loss()+tf.nn.l2_loss(fatt)
+	  # with vs.variable_scope("lstm/BasicLSTMCell",reuse=True):
+	  # 	fatt=tf.get_variable(name="f_att_matrix")
+	  # total_loss = tf.contrib.losses.get_total_loss()+tf.nn.l2_loss(fatt)
+	  total_loss = tf.contrib.losses.get_total_loss()
 
 	  # Add summaries.
 	  tf.summary.scalar("losses/batch_loss", batch_loss)
