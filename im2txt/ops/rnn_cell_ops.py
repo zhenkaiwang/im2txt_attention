@@ -371,6 +371,8 @@ class BasicLSTMCell(RNNCell):
         # h=tf.expand_dims(h,2)
         # e_ti = math_ops.matmul(math_ops.matmul(tf.sigmoid(image_subfeatures),f_att_matrix_tile),h)
         e_ti =array_ops.zeros([batch_size,subfeature_num])
+        print("e_ti")
+        print(e_ti)
         for i in range(subfeature_num):
           x1 = tf.concat(1,[word_imbeddings,image_subfeatures[:,i,:]])
           x2 = tf.tanh(math_ops.matmul(x1,W1)+b1)
