@@ -378,7 +378,11 @@ class BasicLSTMCell(RNNCell):
           print("x1")
           print(x1)
           x2 = tf.tanh(math_ops.matmul(x1,W1)+b1)
+          print("x2")
+          print(x2)
           x3 = tf.tanh(math_ops.matmul(x2,W2)+b2)
+          print("x3")
+          print(x3)
           e_ti[:,i] = x3[:,1]
         # e_ti = self.f_att(image_subfeatures,subfeature_length,h,scope)
         print("e_ti")
