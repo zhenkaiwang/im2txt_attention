@@ -331,6 +331,9 @@ class BasicLSTMCell(RNNCell):
       batch_size = shape[0]
       print("inputs.get_shape[0]")
       print(batch_size)
+      hsize=h.get_shape()
+      print("hidden state length")
+      print(hsize[1].value)
       #padded_length = shape[1].value
       single_input_length = shape[1]
       # print("single_input_length ")
@@ -352,7 +355,7 @@ class BasicLSTMCell(RNNCell):
       # with vs.variable_scope(scope or type(self).__name__,initializer=self._initializer):
       #f_att_matrix = vs.get_variable(name="f_att_matrix",shape = (subfeature_length,state_length), initializer=tf.contrib.layers.xavier_initializer(),dtype=tf.float32)
       mid_layer_size = 300
-      W1 = vs.get_variable(name="w1",shape=(word_imbedding_length+subfeature_length,mid_layer_size),initializer=tf.contrib.layers.xavier_initializer(),dtype=tf.float32)
+      W1 = vs.get_variable(name="w1",shape=(hsize[1].value+subfeature_length,mid_layer_size),initializer=tf.contrib.layers.xavier_initializer(),dtype=tf.float32)
       W2 = vs.get_variable(name="w2",shape=(mid_layer_size,1),initializer=tf.contrib.layers.xavier_initializer(),dtype=tf.float32)
       b1 = vs.get_variable(name="b1",shape=(1,mid_layer_size),initializer=tf.zeros_initializer,dtype=tf.float32)
       b2 = vs.get_variable(name="b2",shape=(1,1),initializer=tf.zeros_initializer,dtype=tf.float32)  
@@ -373,7 +376,7 @@ class BasicLSTMCell(RNNCell):
         # e_ti =array_ops.zeros([batch_size,subfeature_num])
         e_ti=[]
         for i in range(subfeature_num):
-          x1 = tf.concat(1,[word_imbeddings,image_subfeatures[:,i,:]])
+          x1 = tf.concat(1,[h,image_subfeatures[:,i,:]])
           x2 = tf.tanh(math_ops.matmul(x1,W1)+b1)
           x3 = tf.tanh(math_ops.matmul(x2,W2)+b2)
           e_ti.append(x3)
