@@ -449,7 +449,7 @@ class ShowAndTellModel(object):
 	  #tf.losses.add_loss(batch_loss)
 	  tf.contrib.losses.add_loss(batch_loss)
 	  #total_loss = tf.losses.get_total_loss()
-	  with tf.variable_scoep("BasicLSTMCell",reuse=True) as fattscope:
+	  with tf.variable_scope("BasicLSTMCell",reuse=True) as fattscope:
 	  	fatt=tf.get_variable(name="f_att_matrix")
 	  total_loss = tf.contrib.losses.get_total_loss()+tf.nn.l2_loss(fatt)
 
