@@ -354,8 +354,8 @@ class BasicLSTMCell(RNNCell):
       mid_layer_size = 300
       W1 = vs.get_variable(name="w1",shape=(word_imbedding_length+subfeature_length,mid_layer_size),initializer=tf.contrib.layers.xavier_initializer(),dtype=tf.float32)
       W2 = vs.get_variable(name="w2",shape=(mid_layer_size,1),initializer=tf.contrib.layers.xavier_initializer(),dtype=tf.float32)
-      b1 = vs.get_variable(name="b1",shape=(1,mid_layer_size),initializer=tf.zeros_initializer(),dtype=tf.float32)
-      b2 = vs.get_variable(name="b2",shape=(1,1),initializer=tf.zeros_initializer(),dtype=tf.float32)  
+      b1 = vs.get_variable(name="b1",shape=(1,mid_layer_size),initializer=tf.zeros_initializer,dtype=tf.float32)
+      b2 = vs.get_variable(name="b2",shape=(1,1),initializer=tf.zeros_initializer,dtype=tf.float32)  
       word_imbeddings=inputs[:,0:word_imbedding_length]
       if single_input_length != word_imbedding_length:
         image_subfeatures=inputs[:,word_imbedding_length:single_input_length]
