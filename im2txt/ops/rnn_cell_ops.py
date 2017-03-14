@@ -349,8 +349,8 @@ class BasicLSTMCell(RNNCell):
       # z_i=array_ops.zeros(tf.pack([tensorShape[0],tensorShape[1]]))
       print('inputs:')
       print(inputs)
-      print("Initial z_i:")
-      print(z_i)
+      # print("Initial z_i:")
+      # print(z_i)
       state_length = self._num_units
       # with vs.variable_scope(scope or type(self).__name__,initializer=self._initializer):
       #f_att_matrix = vs.get_variable(name="f_att_matrix",shape = (subfeature_length,state_length), initializer=tf.contrib.layers.xavier_initializer(),dtype=tf.float32)
