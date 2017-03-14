@@ -377,6 +377,8 @@ class BasicLSTMCell(RNNCell):
           x3 = tf.tanh(math_ops.matmul(x2,W2)+b2)
           e_ti[:,i] = x3[:,1]
         # e_ti = self.f_att(image_subfeatures,subfeature_length,h,scope)
+        print("e_ti")
+        print(e_ti)
         alpha_ti = nn_ops.softmax(e_ti)
         # z_i = math_ops.reduce_sum(math_ops.matmul(tf.transpose(image_subfeatures,[0,2,1]),alpha_ti),axis=1)
         z_i = math_ops.matmul(tf.transpose(image_subfeatures,[0,2,1]),alpha_ti)
