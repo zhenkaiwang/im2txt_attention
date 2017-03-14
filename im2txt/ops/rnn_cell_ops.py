@@ -370,7 +370,8 @@ class BasicLSTMCell(RNNCell):
         # tf.Print(f_att_matrix,[f_att_matrix])
         # h=tf.expand_dims(h,2)
         # e_ti = math_ops.matmul(math_ops.matmul(tf.sigmoid(image_subfeatures),f_att_matrix_tile),h)
-        e_ti =array_ops.zeros([batch_size,subfeature_num])
+        # e_ti =array_ops.zeros([batch_size,subfeature_num])
+        e_ti=[]
         print("e_ti")
         print(e_ti)
         for i in range(subfeature_num):
@@ -383,8 +384,9 @@ class BasicLSTMCell(RNNCell):
           x3 = tf.tanh(math_ops.matmul(x2,W2)+b2)
           print("x3")
           print(x3)
-          e_ti[:,i] = x3
+          e_ti.append(x3)
         # e_ti = self.f_att(image_subfeatures,subfeature_length,h,scope)
+        e_ti=tf.pack(e_ti)
         print("e_ti")
         print(e_ti)
         alpha_ti = nn_ops.softmax(e_ti)
