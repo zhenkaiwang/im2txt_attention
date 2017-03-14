@@ -229,7 +229,7 @@ class ShowAndTellModel(object):
 
 
   def build_image_embeddings(self):
-        print("build_image_embeddings")
+    print("build_image_embeddings")
     """Builds the image model subgraph and generates image embeddings.
 
     Inputs:
