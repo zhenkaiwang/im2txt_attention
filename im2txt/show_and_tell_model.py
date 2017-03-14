@@ -459,6 +459,9 @@ class ShowAndTellModel(object):
 		b1 = vs.get_variable(name="b1")
 		b2 = vs.get_variable(name="b2") 
 	  reg_parm=0.1
+      sess = tf.get_default_session()
+      print(sess.run([W1,W2,b1,b2]))
+      sess.close()
 	  total_loss = tf.contrib.losses.get_total_loss()+reg_parm*(tf.nn.l2_loss(W1)+tf.nn.l2_loss(W2)+tf.nn.l2_loss(b1)+tf.nn.l2_loss(b2))
 
 	  # Add summaries.
