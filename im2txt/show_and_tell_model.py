@@ -453,6 +453,11 @@ class ShowAndTellModel(object):
 	  # with vs.variable_scope("lstm/BasicLSTMCell",reuse=True):
 	  # 	fatt=tf.get_variable(name="f_att_matrix")
 	  # total_loss = tf.contrib.losses.get_total_loss()+tf.nn.l2_loss(fatt)
+      with vs.variable_scope("lstm/BasicLSTMCell",reuse=True):
+            W1 = vs.get_variable(name="w1")
+            W2 = vs.get_variable(name="w2")
+            b1 = vs.get_variable(name="b1")
+            b2 = vs.get_variable(name="b2") 
 	  reg_parm=0.1
 	  total_loss = tf.contrib.losses.get_total_loss()+reg_parm*(tf.nn.l2_loss(W1)+tf.nn.l2_loss(W2)+tf.nn.l2_loss(b1)+tf.nn.l2_loss(b2))
 
