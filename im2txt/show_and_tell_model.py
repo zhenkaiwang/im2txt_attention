@@ -476,7 +476,7 @@ class ShowAndTellModel(object):
     """Sets up the function to restore inception variables from checkpoint."""
     if self.mode != "inference":
       # Restore inception variables only.
-    saver = tf.train.Saver(self.inception_variables)
+      saver = tf.train.Saver(self.inception_variables)
 
   def restore_fn(sess):
     tf.logging.info("Restoring Inception variables from checkpoint file %s",
