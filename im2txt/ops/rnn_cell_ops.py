@@ -391,7 +391,6 @@ class BasicLSTMCell(RNNCell):
         # z_i = math_ops.reduce_sum(math_ops.matmul(tf.transpose(image_subfeatures,[0,2,1]),alpha_ti),axis=1)
         z_i = math_ops.matmul(tf.transpose(image_subfeatures,[0,2,1]),alpha_ti)
         # h=tf.squeeze(h,[2])
-        print(z_i)
         z_i=tf.squeeze(z_i,squeeze_dims=[2])
         print("squeezed z_i")
         print(z_i)
