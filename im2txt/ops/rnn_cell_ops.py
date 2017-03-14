@@ -375,6 +375,8 @@ class BasicLSTMCell(RNNCell):
         print(e_ti)
         for i in range(subfeature_num):
           x1 = tf.concat(1,[word_imbeddings,image_subfeatures[:,i,:]])
+          print("x1")
+          print(x1)
           x2 = tf.tanh(math_ops.matmul(x1,W1)+b1)
           x3 = tf.tanh(math_ops.matmul(x2,W2)+b2)
           e_ti[:,i] = x3[:,1]
