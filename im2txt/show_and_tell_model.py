@@ -486,7 +486,7 @@ class ShowAndTellModel(object):
     self.init_fn = restore_fn
 
   def setup_global_step(self):
-        print("setup_global_step")
+    print("setup_global_step")
     """Sets up the global step Tensor."""
     global_step = tf.Variable(
         initial_value=0,
