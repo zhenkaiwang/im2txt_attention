@@ -464,8 +464,8 @@ class ShowAndTellModel(object):
         b2print=tf.Print(b2,[b2])
         reg_parm=0.1
         total_loss = tf.contrib.losses.get_total_loss()+reg_parm*(tf.nn.l2_loss(W1)+tf.nn.l2_loss(W2))
-
         # Add summaries.
+        tf.summary.histogram("parameters/"+"e_ti",e_ti)
         tf.summary.scalar("losses/batch_loss", batch_loss)
         tf.summary.scalar("losses/total_loss", total_loss)
         for var in tf.trainable_variables():
