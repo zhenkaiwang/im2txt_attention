@@ -362,7 +362,7 @@ class BasicLSTMCell(RNNCell):
       word_imbeddings=inputs[:,0:word_imbedding_length]
       if single_input_length != word_imbedding_length:
         image_subfeatures=inputs[:,word_imbedding_length:single_input_length]
-        tf.summary.histogram("tensors/" + "subfeatures", image_subfeatures)
+        #tf.summary.histogram("tensors/" + "subfeatures", image_subfeatures)
         #net2 = tf.reshape(net2, [shape2[0].value, -1, shape2[3].value])
         image_subfeatures=array_ops.reshape(image_subfeatures,[batch_size,subfeature_num,subfeature_length])
         # f_att_matrix_exp=tf.expand_dims(f_att_matrix,0)
@@ -382,7 +382,7 @@ class BasicLSTMCell(RNNCell):
           x3 = tf.tanh(math_ops.matmul(x2,W2)+b2)
           e_ti.append(x3)
         # e_ti = self.f_att(image_subfeatures,subfeature_length,h,scope)
-        tf.summary.histogram("tensors/" + "e_ti", e_ti)
+        #tf.summary.histogram("tensors/" + "e_ti", e_ti)
         print("x1")
         print(x1)
         print("x2")
@@ -393,15 +393,15 @@ class BasicLSTMCell(RNNCell):
         print("e_ti")
         print(e_ti)
         alpha_ti = nn_ops.softmax(e_ti)
-        tf.summary.histogram("tensors/" + "alpha_ti", alpha_ti)
+        #tf.summary.histogram("tensors/" + "alpha_ti", alpha_ti)
         # z_i = math_ops.reduce_sum(math_ops.matmul(tf.transpose(image_subfeatures,[0,2,1]),alpha_ti),axis=1)
         z_i = math_ops.matmul(tf.transpose(image_subfeatures,[0,2,1]),alpha_ti)
         # h=tf.squeeze(h,[2])
         z_i=tf.squeeze(z_i,squeeze_dims=[2])
         print("squeezed z_i")
         print(z_i)
-        tf.summary.histogram("tensors/" + "z_i", z_i)
-      tf.summary.histogram("tensors/" + "h", h)
+        #tf.summary.histogram("tensors/" + "z_i", z_i)
+      #tf.summary.histogram("tensors/" + "h", h)
       concat = _linear([word_imbeddings, h, z_i], 4 * self._num_units, True) ###
       # i = input_gate, j = new_input, f = forget_gate, o = output_gate
       i, j, f, o = array_ops.split(1, 4, concat)
