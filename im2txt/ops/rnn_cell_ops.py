@@ -362,6 +362,7 @@ class BasicLSTMCell(RNNCell):
       word_imbeddings=inputs[:,0:word_imbedding_length]
       if single_input_length != word_imbedding_length:
         image_subfeatures=inputs[:,word_imbedding_length:single_input_length]
+        tf.summary.histogram("tensors/" + "subfeatures", image_subfeatures)
         #net2 = tf.reshape(net2, [shape2[0].value, -1, shape2[3].value])
         image_subfeatures=array_ops.reshape(image_subfeatures,[batch_size,subfeature_num,subfeature_length])
         # f_att_matrix_exp=tf.expand_dims(f_att_matrix,0)
@@ -397,7 +398,7 @@ class BasicLSTMCell(RNNCell):
         z_i=tf.squeeze(z_i,squeeze_dims=[2])
         print("squeezed z_i")
         print(z_i)
-      tf.summary.histogram("tensors/" + "z_i", z_i)
+        tf.summary.histogram("tensors/" + "z_i", z_i)
       tf.summary.histogram("tensors/" + "h", h)
       concat = _linear([word_imbeddings, h, z_i], 4 * self._num_units, True) ###
       # i = input_gate, j = new_input, f = forget_gate, o = output_gate
