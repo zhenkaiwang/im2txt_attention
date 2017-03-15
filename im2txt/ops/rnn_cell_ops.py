@@ -65,8 +65,6 @@ from tensorflow.python.ops.rnn_cell import RNNCell
 
 from tensorflow.python.ops import nn_ops 
 
-global e_ti
-
 def _state_size_with_prefix(state_size, prefix=None):
   """Helper function that enables int or TensorShape shape specification.
 
@@ -377,6 +375,7 @@ class BasicLSTMCell(RNNCell):
         # h=tf.expand_dims(h,2)
         # e_ti = math_ops.matmul(math_ops.matmul(tf.sigmoid(image_subfeatures),f_att_matrix_tile),h)
         # e_ti =array_ops.zeros([batch_size,subfeature_num])
+        global e_ti
         e_ti=[]
         for i in range(subfeature_num):
           x1 = tf.concat(1,[h,image_subfeatures[:,i,:]])
