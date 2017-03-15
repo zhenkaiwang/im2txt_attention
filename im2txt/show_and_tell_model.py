@@ -33,7 +33,7 @@ from tensorflow.python.ops import variable_scope as vs
 #RNNCELL
 from im2txt.ops import rnn_cell_ops
 
-global e_ti
+global e_ti=[]
 
 tf.nn.rnn_cell=rnn_cell_ops
 
