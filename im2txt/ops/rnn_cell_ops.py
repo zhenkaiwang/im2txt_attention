@@ -315,6 +315,7 @@ class BasicLSTMCell(RNNCell):
   #   return z_i
 
   def __call__(self, inputs, state, scope=None):
+    global h,e_ti,z_i,alpha_ti
     """Long short-term memory cell (LSTM)."""
     with vs.variable_scope(scope or type(self).__name__):  # "BasicLSTMCell"
       # Parameters of gates are concatenated into one multiply for efficiency.
@@ -375,7 +376,6 @@ class BasicLSTMCell(RNNCell):
         # h=tf.expand_dims(h,2)
         # e_ti = math_ops.matmul(math_ops.matmul(tf.sigmoid(image_subfeatures),f_att_matrix_tile),h)
         # e_ti =array_ops.zeros([batch_size,subfeature_num])
-        global e_ti
         e_ti=[]
         for i in range(subfeature_num):
           x1 = tf.concat(1,[h,image_subfeatures[:,i,:]])

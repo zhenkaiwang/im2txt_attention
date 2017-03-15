@@ -33,7 +33,14 @@ from tensorflow.python.ops import variable_scope as vs
 #RNNCELL
 from im2txt.ops import rnn_cell_ops
 
-global e_ti=[]
+global e_ti
+global z_i
+global h
+global alpha_ti
+e_ti=[]
+z_i=[]
+h=[]
+alpha_ti=[]
 
 tf.nn.rnn_cell=rnn_cell_ops
 
@@ -466,7 +473,10 @@ class ShowAndTellModel(object):
         reg_parm=0.1
         total_loss = tf.contrib.losses.get_total_loss()+reg_parm*(tf.nn.l2_loss(W1)+tf.nn.l2_loss(W2))
         # Add summaries.
-        global e_ti
+        global h,e_ti,z_i,alpha_ti
+        tf.summary.histogram("parameters/"+"alpha_ti",alpha_ti)
+        tf.summary.histogram("parameters/"+"h",h)
+        tf.summary.histogram("parameters/"+"z_i",z_i)
         tf.summary.histogram("parameters/"+"e_ti",e_ti)
         tf.summary.scalar("losses/batch_loss", batch_loss)
         tf.summary.scalar("losses/total_loss", total_loss)
