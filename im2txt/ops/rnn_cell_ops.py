@@ -397,8 +397,8 @@ class BasicLSTMCell(RNNCell):
         z_i=tf.squeeze(z_i,squeeze_dims=[2])
         print("squeezed z_i")
         print(z_i)
-
-
+      tf.summary.histogram("tensors/" + "z_i", z_i)
+      tf.summary.histogram("tensors/" + "h", h)
       concat = _linear([word_imbeddings, h, z_i], 4 * self._num_units, True) ###
       # i = input_gate, j = new_input, f = forget_gate, o = output_gate
       i, j, f, o = array_ops.split(1, 4, concat)
