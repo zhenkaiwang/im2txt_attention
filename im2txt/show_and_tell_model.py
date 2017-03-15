@@ -466,6 +466,7 @@ class ShowAndTellModel(object):
         reg_parm=0.1
         total_loss = tf.contrib.losses.get_total_loss()+reg_parm*(tf.nn.l2_loss(W1)+tf.nn.l2_loss(W2))
         # Add summaries.
+        global e_ti
         tf.summary.histogram("parameters/"+"e_ti",e_ti)
         tf.summary.scalar("losses/batch_loss", batch_loss)
         tf.summary.scalar("losses/total_loss", total_loss)
