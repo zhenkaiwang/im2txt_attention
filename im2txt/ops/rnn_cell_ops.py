@@ -376,23 +376,43 @@ class BasicLSTMCell(RNNCell):
         # h=tf.expand_dims(h,2)
         # e_ti = math_ops.matmul(math_ops.matmul(tf.sigmoid(image_subfeatures),f_att_matrix_tile),h)
         # e_ti =array_ops.zeros([batch_size,subfeature_num])
-        e_ti=[]
-        for i in range(subfeature_num):
-          x1 = tf.concat(1,[h,image_subfeatures[:,i,:]])
-          x2 = tf.tanh(math_ops.matmul(x1,W1)+b1)
-          x3 = tf.tanh(math_ops.matmul(x2,W2)+b2)
-          e_ti.append(x3)
-        # e_ti = self.f_att(image_subfeatures,subfeature_length,h,scope)
-        print("x1")
-        print(x1)
-        print("x2")
-        print(x2)
-        print("x3")
-        print(x3)
-        e_ti=tf.transpose(tf.pack(e_ti),[1,0,2])
-        print("e_ti")
-        print(e_ti)
-        alpha_ti = nn_ops.softmax(e_ti)
+ 
+        W1_matrix=tf.expand_dims(W1,0) #[1,state_length+subfeature_length,mid_layer_size]
+        W1_matrix=tf.tile(W1_matrix,[batch_size,1,1]) #[batchsize,state_length+subfeature_length,mid_layer_size]
+        W2_matrix=tf.expand_dims(W2,0)
+        W2_matrix=tf.tile(W2_matrix,[batch_size,1,1])
+        b1_matrix=tf.expand_dims(b1,0) #[1,1,mid_layer_size]     
+        b1_matrix=tf.tile(b1,[batch_size,1,1])
+        b2_matrix=tf.expand_dims(b2,0) #[1,1,mid_layer_size]     
+        b2_matrix=tf.tile(b2,[batch_size,1,1])
+
+        h_matrix=tf.expand_dims(h,1) # [batchsize,1,state_length]
+        h_matrix=tf.tile(h_matrix,[1,subfeature_num,1]) #[batchsize,subfeature_num,state_length]
+        x1 = tf.concat(2,[h,image_subfeatures]) #[batchsize,subfeature_num,state_length+subfeature_length]
+        x2 = tf.tanh(math_ops.matmul(x1,W1)+b1) #[batchsize,subfeature_num,mid_layer_size]
+        e_ti = tf.tanh(math_ops.matmul(x2,W2)+b2) #[batchsize,subfeature_num,1]
+        #e_ti = tf.squeeze(e_ti,[2]) #[batchsize,subfeature_num]
+        alpha_ti = nn_ops.softmax(e_ti) #[batchsize,subfeature_num,1]
+
+        # e_ti=[]
+        # for i in range(subfeature_num):
+        #   x1 = tf.concat(1,[h,image_subfeatures[:,i,:]])
+        #   x2 = tf.tanh(math_ops.matmul(x1,W1)+b1)
+        #   x3 = tf.tanh(math_ops.matmul(x2,W2)+b2)
+        #   e_ti.append(x3)
+        # # e_ti = self.f_att(image_subfeatures,subfeature_length,h,scope)
+        # print("x1")
+        # print(x1)
+        # print("x2")
+        # print(x2)
+        # print("x3")
+        # print(x3)
+        # e_ti=tf.transpose(tf.pack(e_ti),[1,0,2])
+        # print("e_ti")
+        # print(e_ti)
+        # alpha_ti = nn_ops.softmax(e_ti)
+
+
         #tf.summary.histogram("tensors/" + "alpha_ti", alpha_ti)
         # z_i = math_ops.reduce_sum(math_ops.matmul(tf.transpose(image_subfeatures,[0,2,1]),alpha_ti),axis=1)
         z_i = math_ops.matmul(tf.transpose(image_subfeatures,[0,2,1]),alpha_ti)
