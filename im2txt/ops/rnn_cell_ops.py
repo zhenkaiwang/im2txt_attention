@@ -382,8 +382,8 @@ class BasicLSTMCell(RNNCell):
         W2_matrix=tf.expand_dims(W2,0)
         W2_matrix=tf.tile(W2_matrix,[batch_size,1,1])
         b1_matrix=tf.expand_dims(b1,0) #[1,1,mid_layer_size]     
-        b1_matrix=tf.tile(b1,[batch_size,1,1])
-        b2_matrix=tf.expand_dims(b2,0) #[1,1,mid_layer_size]     
+        b1_matrix=tf.tile(b1_matrix,[batch_size,1,1])
+        b2_matrix=tf.expand_dims(b2_matrix,0) #[1,1,mid_layer_size]     
         b2_matrix=tf.tile(b2,[batch_size,1,1])
 
         h_matrix=tf.expand_dims(h,1) # [batchsize,1,state_length]
