@@ -56,7 +56,7 @@ class ModelConfig(object):
     self.num_preprocess_threads = 4
 
     # Batch size.
-    self.batch_size = 8
+    self.batch_size = 16
 
     # File containing an Inception v3 checkpoint to initialize the variables
     # of the Inception model. Must be provided when starting training for the
@@ -91,7 +91,7 @@ class TrainingConfig(object):
 
     # Learning rate for the initial phase of training.
     #self.initial_learning_rate = 2.0
-    self.initial_learning_rate = 1.0
+    self.initial_learning_rate = 0.001
     self.learning_rate_decay_factor = 0.5
     self.num_epochs_per_decay = 8.0
 
