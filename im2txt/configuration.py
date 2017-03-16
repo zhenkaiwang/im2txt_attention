@@ -75,7 +75,8 @@ class ModelConfig(object):
     self.num_lstm_units = 512
 
     # If < 1.0, the dropout keep probability applied to LSTM variables.
-    self.lstm_dropout_keep_prob = 0.7
+    # self.lstm_dropout_keep_prob = 0.7
+    self.lstm_dropout_keep_prob = 1
 
 
 class TrainingConfig(object):
