@@ -388,7 +388,7 @@ class BasicLSTMCell(RNNCell):
 
         h_matrix=tf.expand_dims(h,1) # [batchsize,1,state_length]
         h_matrix=tf.tile(h_matrix,[1,subfeature_num,1]) #[batchsize,subfeature_num,state_length]
-        x1 = tf.concat(2,[h,image_subfeatures]) #[batchsize,subfeature_num,state_length+subfeature_length]
+        x1 = tf.concat(2,[h_matrix,image_subfeatures]) #[batchsize,subfeature_num,state_length+subfeature_length]
         x2 = tf.tanh(math_ops.matmul(x1,W1)+b1) #[batchsize,subfeature_num,mid_layer_size]
         e_ti = tf.tanh(math_ops.matmul(x2,W2)+b2) #[batchsize,subfeature_num,1]
         #e_ti = tf.squeeze(e_ti,[2]) #[batchsize,subfeature_num]
