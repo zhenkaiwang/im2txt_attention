@@ -460,18 +460,18 @@ class ShowAndTellModel(object):
       #total_loss = tf.losses.get_total_loss()
       # with vs.variable_scope("lstm/BasicLSTMCell",reuse=True):
       #   fatt=tf.get_variable(name="f_att_matrix")
-      # total_loss = tf.contrib.losses.get_total_loss()+tf.nn.l2_loss(fatt)
-      with vs.variable_scope("lstm/BasicLSTMCell",reuse=True):
-        W1 = vs.get_variable(name="w1")
-        W2 = vs.get_variable(name="w2")
-        b1 = vs.get_variable(name="b1")
-        b2 = vs.get_variable(name="b2") 
-        w1print=tf.Print(W1,[W1])
-        w2print=tf.Print(W2,[W2])
-        b1print=tf.Print(b1,[b1])
-        b2print=tf.Print(b2,[b2])
-        reg_parm=0.1
-        total_loss = tf.contrib.losses.get_total_loss()+reg_parm*(tf.nn.l2_loss(W1)+tf.nn.l2_loss(W2))
+      total_loss = tf.contrib.losses.get_total_loss()
+      # with vs.variable_scope("lstm/BasicLSTMCell",reuse=True):
+      #   W1 = vs.get_variable(name="w1")
+      #   W2 = vs.get_variable(name="w2")
+      #   b1 = vs.get_variable(name="b1")
+      #   b2 = vs.get_variable(name="b2") 
+      #   w1print=tf.Print(W1,[W1])
+      #   w2print=tf.Print(W2,[W2])
+      #   b1print=tf.Print(b1,[b1])
+      #   b2print=tf.Print(b2,[b2])
+      #   reg_parm=0.1
+      #   total_loss = tf.contrib.losses.get_total_loss()+reg_parm*(tf.nn.l2_loss(W1)+tf.nn.l2_loss(W2))
         # Add summaries.
         global h,e_ti,z_i,alpha_ti
         tf.summary.histogram("parameters/"+"alpha_ti",alpha_ti)
