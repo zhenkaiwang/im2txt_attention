@@ -26,6 +26,14 @@ sh_binary(
     ],
 )
 
+sh_binary(
+    name = "download_and_preprocess_mscoco_sub",
+    srcs = ["data/download_and_preprocess_mscoco_sub.sh"],
+    data = [
+        ":build_mscoco_data",
+    ],
+)
+
 py_library(
     name = "configuration",
     srcs = ["configuration.py"],
