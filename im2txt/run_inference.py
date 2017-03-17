@@ -55,6 +55,7 @@ def main(_):
     # Load the model from checkpoint.
     restore_fn(sess)
 
+    print("going to print!")  
     variables_names = [v.name for v in tf.trainable_variables()]
     values = sess.run(variables_names)
     for k,v in zip(variables_names,values)
