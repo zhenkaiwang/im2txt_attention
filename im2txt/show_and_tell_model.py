@@ -421,7 +421,7 @@ class ShowAndTellModel(object):
         # Concatentate the resulting state.
         #tf.concat(state_tuple, 1, name="state")
         tf.concat(1,state_tuple, name="state")
-        alpha_ti_diff=tf.identity(alpha_ti_diff, name="alpha_ti")
+        alpha_ti_diff=tf.identity(alpha_ti_diff, name="alpha_ti_diff")
         alpha_ti=tf.identity(alpha_ti, name="alpha_ti")
         z_i=tf.identity(z_i, name="z_i")
         word_imbeddings=tf.identity(word_imbeddings, name="word_imbeddings")

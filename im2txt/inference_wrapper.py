@@ -42,13 +42,20 @@ class InferenceWrapper(inference_wrapper_base.InferenceWrapperBase):
     return initial_state
 
   def inference_step(self, sess, input_feed, state_feed,encoded_image):
-    softmax_output, state_output,alpha_ti = sess.run(
-        fetches=["softmax:0", "lstm/state:0","lstm/alpha_ti:0"],
+    softmax_output, state_output,alpha_ti,alpha_ti_diff,z_i,word_imbeddings = sess.run(
+        fetches=["softmax:0", "lstm/state:0","lstm/alpha_ti:0","lstm/alpha_ti_diff:0","lstm/z_i:0","lstm/word_imbeddings:0"],
         feed_dict={
             "input_feed:0": input_feed,
             "lstm/state_feed:0": state_feed,
             "image_feed:0": encoded_image
         })
     print("print lstm inner variables!")
+    print("alpha_ti")
     print(alpha_ti)
+    print("alpha_ti_diff")
+    print(alpha_ti_diff)
+    print("z_i")
+    print(z_i)
+    print("word_imbeddings")
+    print(word_imbeddings)
     return softmax_output, state_output, None
