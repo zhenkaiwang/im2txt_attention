@@ -6,9 +6,6 @@
 /bazel-testlogs
 /bazel-tf
 /model
-<<<<<<< HEAD
 /.svn
 *.json
-=======
->>>>>>> 6afd96aff591be738c399f06602affedca429e61
 *.ckpt
