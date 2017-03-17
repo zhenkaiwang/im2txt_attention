@@ -392,7 +392,7 @@ class BasicLSTMCell(RNNCell):
         x2 = tf.tanh(math_ops.matmul(x1,W1_matrix)+b1_matrix) #[batchsize,subfeature_num,mid_layer_size]
         e_ti = tf.tanh(math_ops.matmul(x2,W2_matrix)+b2_matrix) #[batchsize,subfeature_num,1]
         #e_ti = tf.squeeze(e_ti,[2]) #[batchsize,subfeature_num]
-        alpha_ti = nn_ops.softmax(e_ti) #[batchsize,subfeature_num,1]
+        alpha_ti = nn_ops.softmax(e_ti,dim=1) #[batchsize,subfeature_num,1]
 
         # e_ti=[]
         # for i in range(subfeature_num):
