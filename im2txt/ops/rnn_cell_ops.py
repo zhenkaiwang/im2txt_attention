@@ -361,8 +361,6 @@ class BasicLSTMCell(RNNCell):
       b2 = vs.get_variable(name="b2",shape=(1,1),initializer=tf.zeros_initializer,dtype=tf.float32)  
       word_imbeddings=inputs[:,0:word_imbedding_length]
       alpha_ti = []
-      z_i = []
-      word_imbeddings = []
       if single_input_length != word_imbedding_length:
         image_subfeatures=inputs[:,word_imbedding_length:single_input_length]
         #tf.summary.histogram("tensors/" + "subfeatures", image_subfeatures)
