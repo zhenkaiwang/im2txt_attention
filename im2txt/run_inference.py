@@ -7,6 +7,7 @@ from __future__ import print_function
 import math
 import os, os.path
 import json
+import codecs
 
 import imghdr
 
@@ -56,15 +57,17 @@ def main(_):
     restore_fn(sess)
 
     print("going to print!")  
-    varaibelDic_file = open(varaibelDic_dir,"w")
+    #varaibelDic_file = open(varaibelDic_dir,"w")
     variables_names = [v.name for v in tf.trainable_variables()]
     values = sess.run(variables_names)
     varaiableDic = {}
     for k,v in zip(variables_names,values):
       print(k,v)
       print(type(v))
-      varaiableDic[k]=v
-    varaibelDic_file.write(json.dumps(varaiableDic))
+      b=v.tolist()
+      varaiableDic[k]=b
+    #varaibelDic_file.write(json.dumps(varaiableDic))
+    json.dump(varaiableDic,codecs.open(varaibelDic_dir,'w',encoding='utf-8'))
     
     file_writer = tf.summary.FileWriter('/home/superNLP/ours/im2txt_attention/tesnboard', sess.graph)
     # Prepare the caption generator. Here we are implicitly using the default
