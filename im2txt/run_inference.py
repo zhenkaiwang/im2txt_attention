@@ -31,7 +31,7 @@ tf.flags.DEFINE_string("input_files", "",
 img_dir = '/home/superNLP/usb_hdd/cocodata/raw-data/pic100/'
 #dict_dir = '/home/superNLP/usb_hdd/cocodata/raw-data/annotations/captions_val2014_filename_id.json'
 output_dir = 'captions_pic100_showandtell_results.json'
-varaibelDic_dir = 'variableDic.json'
+varaibelDic_dir = 'variableDic46250.json'
 
 def main(_):
   # Build the inference graph.
