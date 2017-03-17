@@ -415,7 +415,7 @@ class ShowAndTellModel(object):
 
         if 'alpha_ti_old' in globals() or 'alpha_ti_old' in locals():
         	alpha_ti_diff = alpha_ti - alpha_ti_old
-        elif:
+        else:
         	alpha_ti_diff = alpha_ti
 
         # Concatentate the resulting state.
