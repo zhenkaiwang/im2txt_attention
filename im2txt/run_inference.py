@@ -54,6 +54,12 @@ def main(_):
   with tf.Session(graph=g) as sess:
     # Load the model from checkpoint.
     restore_fn(sess)
+
+    variables_names = [v.name for v in tf.trainable_variables()]
+    values = sess.run(variables_names)
+    for k,v in zip(variables_names,values)
+      print(k,v)
+
     
     file_writer = tf.summary.FileWriter('/home/superNLP/ours/im2txt_attention/tesnboard', sess.graph)
     # Prepare the caption generator. Here we are implicitly using the default
