@@ -64,10 +64,10 @@ def main(_):
     for k,v in zip(variables_names,values):
       print(k,v)
       print(type(v))
-      b=v.tolist()
-      varaiableDic[k]=b
+      #b=v.tolist()
+      #varaiableDic[k]=b
     #varaibelDic_file.write(json.dumps(varaiableDic))
-    json.dump(varaiableDic,codecs.open(varaibelDic_dir,'w',encoding='utf-8'))
+    #json.dump(varaiableDic,codecs.open(varaibelDic_dir,'w',encoding='utf-8'))
     
     file_writer = tf.summary.FileWriter('/home/superNLP/ours/im2txt_attention/tesnboard', sess.graph)
     # Prepare the caption generator. Here we are implicitly using the default
