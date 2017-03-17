@@ -30,7 +30,7 @@ tf.flags.DEFINE_string("input_files", "",
 img_dir = '/home/superNLP/usb_hdd/cocodata/raw-data/pic100/'
 #dict_dir = '/home/superNLP/usb_hdd/cocodata/raw-data/annotations/captions_val2014_filename_id.json'
 output_dir = 'captions_pic100_showandtell_results.json'
-
+varaibelDic_dir = 'variableDic.json'
 
 def main(_):
   # Build the inference graph.
@@ -56,11 +56,14 @@ def main(_):
     restore_fn(sess)
 
     print("going to print!")  
+    varaibelDic_file = open(varaibelDic_dir,"w")
     variables_names = [v.name for v in tf.trainable_variables()]
     values = sess.run(variables_names)
+    varaiableDic = {}
     for k,v in zip(variables_names,values):
       print(k,v)
-
+      varaiableDic[k]=v
+    output_file.write(json.dumps(varaiableDic))
     
     file_writer = tf.summary.FileWriter('/home/superNLP/ours/im2txt_attention/tesnboard', sess.graph)
     # Prepare the caption generator. Here we are implicitly using the default
