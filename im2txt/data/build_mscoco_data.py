@@ -94,7 +94,8 @@ import sys
 import threading
 
 
-
+import nltk
+nltk.data.path.append("/home/superNLP/usb_hdd/nltk_data")
 import nltk.tokenize
 import numpy as np
 import tensorflow as tf
