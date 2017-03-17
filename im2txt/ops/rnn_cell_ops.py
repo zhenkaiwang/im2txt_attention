@@ -315,7 +315,7 @@ class BasicLSTMCell(RNNCell):
   #   return z_i
 
   def __call__(self, inputs, state, scope=None):
-    global h,e_ti,z_i,alpha_ti
+    # global h,e_ti,z_i,alpha_ti
     """Long short-term memory cell (LSTM)."""
     with vs.variable_scope(scope or type(self).__name__):  # "BasicLSTMCell"
       # Parameters of gates are concatenated into one multiply for efficiency.
@@ -434,7 +434,7 @@ class BasicLSTMCell(RNNCell):
         new_state = LSTMStateTuple(new_c, new_h)
       else:
         new_state = array_ops.concat(1, [new_c, new_h])
-      return new_h, new_state
+      return new_h, new_state, alpha_ti, z_i, word_imbeddings
 
 
 def _get_concat_variable(name, shape, dtype, num_shards):

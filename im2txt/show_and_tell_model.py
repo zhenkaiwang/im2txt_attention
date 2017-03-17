@@ -33,14 +33,14 @@ from tensorflow.python.ops import variable_scope as vs
 #RNNCELL
 from im2txt.ops import rnn_cell_ops
 
-global e_ti
-global z_i
-global h
-global alpha_ti
-e_ti=[]
-z_i=[]
-h=[]
-alpha_ti=[]
+# global e_ti
+# global z_i
+# global h
+# global alpha_ti
+# e_ti=[]
+# z_i=[]
+# h=[]
+# alpha_ti=[]
 
 tf.nn.rnn_cell=rnn_cell_ops
 
@@ -406,20 +406,31 @@ class ShowAndTellModel(object):
         print("self.seq_embeddings:")
         print(self.seq_embeddings)
         # inputs_wa = self.get_inputs()
-        
-        lstm_outputs, state_tuple = lstm_cell(
+        if 'alpha_ti' in globals() or 'alpha_ti' in locals():
+        	alpha_ti_old = alpha_ti
+
+        lstm_outputs, state_tuple, alpha_ti, z_i, word_imbeddings= lstm_cell(
           inputs=tf.squeeze(self.inputs_wa, squeeze_dims=[1]),
           state=state_tuple)
+
+        if 'alpha_ti_old' in globals() or 'alpha_ti_old' in locals():
+        	alpha_ti_diff = alpha_ti - alpha_ti_old
+        elif:
+        	alpha_ti_diff = alpha_ti
 
         # Concatentate the resulting state.
         #tf.concat(state_tuple, 1, name="state")
         tf.concat(1,state_tuple, name="state")
+        alpha_ti_diff=tf.identity(alpha_ti_diff, name="alpha_ti")
+        alpha_ti=tf.identity(alpha_ti, name="alpha_ti")
+        z_i=tf.identity(z_i, name="z_i")
+        word_imbeddings=tf.identity(word_imbeddings, name="word_imbeddings")
       else:
         # Run the batch of sequence embeddings through the LSTM.
         # inputs_wa = self.get_inputs()
 
         sequence_length = tf.reduce_sum(self.input_mask, 1)
-        lstm_outputs, _ = tf.nn.dynamic_rnn(cell=lstm_cell,
+        lstm_outputs, _ , _ , _ , _ = tf.nn.dynamic_rnn(cell=lstm_cell,
                           inputs=self.inputs_wa,
                           sequence_length=sequence_length,
                           initial_state=initial_state,
@@ -473,11 +484,11 @@ class ShowAndTellModel(object):
       #   reg_parm=0.1
       #   total_loss = tf.contrib.losses.get_total_loss()+reg_parm*(tf.nn.l2_loss(W1)+tf.nn.l2_loss(W2))
         # Add summaries.
-        global h,e_ti,z_i,alpha_ti
-        tf.summary.histogram("parameters/"+"alpha_ti",alpha_ti)
-        tf.summary.histogram("parameters/"+"h",h)
-        tf.summary.histogram("parameters/"+"z_i",z_i)
-        tf.summary.histogram("parameters/"+"e_ti",e_ti)
+        # global h,e_ti,z_i,alpha_ti
+        #tf.summary.histogram("parameters/"+"alpha_ti",alpha_ti)
+        #tf.summary.histogram("parameters/"+"h",h)
+        #tf.summary.histogram("parameters/"+"z_i",z_i)
+        #tf.summary.histogram("parameters/"+"e_ti",e_ti)
         tf.summary.scalar("losses/batch_loss", batch_loss)
         tf.summary.scalar("losses/total_loss", total_loss)
         for var in tf.trainable_variables():
