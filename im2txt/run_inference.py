@@ -62,6 +62,7 @@ def main(_):
     varaiableDic = {}
     for k,v in zip(variables_names,values):
       print(k,v)
+      print(type(v))
       varaiableDic[k]=v
     varaibelDic_file.write(json.dumps(varaiableDic))
     
