@@ -106,10 +106,10 @@ def main(_):
             sentence = " ".join(sentence)
             print('caption predicted:', sentence)
             #print("  %d) %s (p=%f)" % (i, sentence, math.exp(caption.logprob)))
-            temp = {}
-            temp["image_id"] = dict_data[filename]
-            temp["caption"] = sentence[0:len(sentence)-2]
-            imgId_cap.append(temp)
+            #temp = {}
+            #temp["image_id"] = dict_data[filename]
+            #temp["caption"] = sentence[0:len(sentence)-2]
+            #imgId_cap.append(temp)
             break
     #output_file.write(json.dumps(imgId_cap))
     file_writer.add_graph(sess.graph)
