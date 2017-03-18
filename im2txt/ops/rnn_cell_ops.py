@@ -1018,7 +1018,7 @@ def _linear(args, output_size, bias, bias_start=0.0, scope=None):
       #total_arg_size += shape[1]
     print("shape[1]")
     print(shape)
-    total_arg_size += shape[1]
+    #total_arg_size += shape[1]
   #print("total_arg_size")
   #print(total_arg_size)
   dtype = [a.dtype for a in args][0]
@@ -1026,7 +1026,8 @@ def _linear(args, output_size, bias, bias_start=0.0, scope=None):
   # Now the computation.
   with vs.variable_scope(scope or "Linear"):
     matrix = vs.get_variable(
-         "Matrix", [total_arg_size, output_size], dtype=dtype)
+         "Matrix", [512+192+512, output_size], dtype=dtype)
+        # "Matrix", [total_arg_size, output_size], dtype=dtype)
         #"Matrix", [total_arg_size, output_size], dtype=dtype)
     if len(args) == 1:
       res = math_ops.matmul(args[0], matrix)
