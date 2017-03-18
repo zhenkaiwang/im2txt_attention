@@ -1016,8 +1016,11 @@ def _linear(args, output_size, bias, bias_start=0.0, scope=None):
     #  raise ValueError("Linear expects shape[1] of arguments: %s" % str(shapes))
     #else:
       #total_arg_size += shape[1]
+    print("shape[1]")
+    print(shape[1])
     total_arg_size += shape[1]
-
+  print("total_arg_size")
+  print(total_arg_size)
   dtype = [a.dtype for a in args][0]
 
   # Now the computation.
