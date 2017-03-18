@@ -57,19 +57,19 @@ def main(_):
     restore_fn(sess)
 
     print("going to print!")  
-    #varaibelDic_file = open(varaibelDic_dir,"w")
+    varaibelDic_file = open(varaibelDic_dir,"w")
     variables_names = [v.name for v in tf.trainable_variables()]
     values = sess.run(variables_names)
     varaiableDic = {}
     for k,v in zip(variables_names,values):
       print(k,v)
       #print(tf.nn.l2_loss(v))
-      #b=v.tolist()
-      #varaiableDic[k]=b
+      b=v.tolist()
+      varaiableDic[k]=b
     #varaibelDic_file.write(json.dumps(varaiableDic))
-    #json.dump(varaiableDic,codecs.open(varaibelDic_dir,'w',encoding='utf-8'))
+    json.dump(varaiableDic,codecs.open(varaibelDic_dir,'w',encoding='utf-8'))
     
-    file_writer = tf.summary.FileWriter('/home/superNLP/ours/im2txt_attention/tesnboard', sess.graph)
+    #file_writer = tf.summary.FileWriter('/home/superNLP/ours/im2txt_attention/tesnboard', sess.graph)
     # Prepare the caption generator. Here we are implicitly using the default
     # beam search parameters. See caption_generator.py for a description of the
     # available beam search parameters.
@@ -112,7 +112,7 @@ def main(_):
             #imgId_cap.append(temp)
             break
     #output_file.write(json.dumps(imgId_cap))
-    file_writer.add_graph(sess.graph)
-    file_writer.close()
+    #file_writer.add_graph(sess.graph)
+    #file_writer.close()
 if __name__ == "__main__":
   tf.app.run()
