@@ -63,7 +63,7 @@ def main(_):
     varaiableDic = {}
     for k,v in zip(variables_names,values):
       print(k,v)
-      print(type(v))
+      #print(tf.nn.l2_loss(v))
       #b=v.tolist()
       #varaiableDic[k]=b
     #varaibelDic_file.write(json.dumps(varaiableDic))
