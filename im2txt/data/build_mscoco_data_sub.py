@@ -457,8 +457,8 @@ def main(unused_argv):
   # Load image metadata from caption files.
   mscoco_train_dataset = _load_and_process_metadata(FLAGS.train_captions_file,
                                                     FLAGS.train_image_dir)
-  mscoco_val_dataset = _load_and_process_metadata(FLAGS.val_captions_file,
-                                                  FLAGS.val_image_dir)
+  # mscoco_val_dataset = _load_and_process_metadata(FLAGS.val_captions_file,
+  #                                                 FLAGS.val_image_dir)
 
   # Redistribute the MSCOCO data as follows:
   #   train_dataset = 100% of mscoco_train_dataset + 85% of mscoco_val_dataset.
@@ -466,7 +466,8 @@ def main(unused_argv):
   #   test_dataset = 10% of mscoco_val_dataset (for final evaluation).
   train_cutoff = int(0.85 * len(mscoco_val_dataset))
   val_cutoff = int(0.90 * len(mscoco_val_dataset))
-  train_dataset = mscoco_train_dataset + mscoco_val_dataset[0:train_cutoff]
+  # train_dataset = mscoco_train_dataset + mscoco_val_dataset[0:train_cutoff]
+  train_dataset = mscoco_train_dataset
   val_dataset = mscoco_val_dataset[train_cutoff:val_cutoff]
   test_dataset = mscoco_val_dataset[val_cutoff:]
 
@@ -476,8 +477,8 @@ def main(unused_argv):
   vocab = _create_vocab(train_captions)
 
   _process_dataset("train", train_dataset, vocab, FLAGS.train_shards)
-  _process_dataset("val", val_dataset, vocab, FLAGS.val_shards)
-  _process_dataset("test", test_dataset, vocab, FLAGS.test_shards)
+  # _process_dataset("val", val_dataset, vocab, FLAGS.val_shards)
+  # _process_dataset("test", test_dataset, vocab, FLAGS.test_shards)
 
 
 if __name__ == "__main__":
