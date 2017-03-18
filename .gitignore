@@ -6,6 +6,7 @@
 /bazel-testlogs
 /bazel-tf
 /model
+/tesnboard
 /.svn
 *.json
 *.ckpt
