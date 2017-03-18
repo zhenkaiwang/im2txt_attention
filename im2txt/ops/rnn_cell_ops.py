@@ -365,7 +365,10 @@ class BasicLSTMCell(RNNCell):
         image_subfeatures=inputs[:,word_imbedding_length:single_input_length]
         #tf.summary.histogram("tensors/" + "subfeatures", image_subfeatures)
         #net2 = tf.reshape(net2, [shape2[0].value, -1, shape2[3].value])
-        image_subfeatures=array_ops.reshape(image_subfeatures,[batch_size,subfeature_num,subfeature_length])
+
+        #image_subfeatures=array_ops.reshape(image_subfeatures,[batch_size,subfeature_num,subfeature_length])
+        image_subfeatures=array_ops.reshape(image_subfeatures,tf.pack([tensorShape[0],subfeature_num,subfeature_length]))
+
         # f_att_matrix_exp=tf.expand_dims(f_att_matrix,0)
         # f_att_matrix_tile=tf.tile(f_att_matrix_exp,tf.pack([batch_size,1,1]))
         # print("fatt,fatt_exp,fatt_tile")
