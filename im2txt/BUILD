@@ -25,12 +25,17 @@ sh_binary(
         ":build_mscoco_data",
     ],
 )
-
+py_binary(
+    name = "build_mscoco_data_sub",
+    srcs = [
+        "data/build_mscoco_data_sub.py",
+    ],
+)
 sh_binary(
     name = "download_and_preprocess_mscoco_sub",
     srcs = ["data/download_and_preprocess_mscoco_sub.sh"],
     data = [
-        ":build_mscoco_data",
+        ":build_mscoco_data_sub",
     ],
 )
 

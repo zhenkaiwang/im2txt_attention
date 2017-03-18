@@ -467,8 +467,8 @@ def main(unused_argv):
   #   train_dataset = 100% of mscoco_train_dataset + 85% of mscoco_val_dataset.
   #   val_dataset = 5% of mscoco_val_dataset (for validation during training).
   #   test_dataset = 10% of mscoco_val_dataset (for final evaluation).
-  train_cutoff = int(0.85 * len(mscoco_val_dataset))
-  val_cutoff = int(0.90 * len(mscoco_val_dataset))
+  #train_cutoff = int(0.85 * len(mscoco_val_dataset))
+  #val_cutoff = int(0.90 * len(mscoco_val_dataset))
   # train_dataset = mscoco_train_dataset + mscoco_val_dataset[0:train_cutoff]
   train_dataset = mscoco_train_dataset
   # val_dataset = mscoco_val_dataset[train_cutoff:val_cutoff]
