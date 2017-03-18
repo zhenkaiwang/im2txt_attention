@@ -1009,18 +1009,16 @@ def _linear(args, output_size, bias, bias_start=0.0, scope=None):
   shapes = [a.get_shape().as_list() for a in args]
   #shapes = [tf.shape(a) for a in args]
   #total_arg_size = shapes[0][1]-shapes[0][1]
+  '''
   for shape in shapes:
-    #if len(shape) != 2:
-    #  raise ValueError("Linear is expecting 2D arguments: %s" % str(shapes))
-    #if not shape[1]:
-    #  raise ValueError("Linear expects shape[1] of arguments: %s" % str(shapes))
-    #else:
-      #total_arg_size += shape[1]
-    print("shape[1]")
-    print(shape)
-    #total_arg_size += shape[1]
-  #print("total_arg_size")
-  #print(total_arg_size)
+    if len(shape) != 2:
+      raise ValueError("Linear is expecting 2D arguments: %s" % str(shapes))
+    if not shape[1]:
+      raise ValueError("Linear expects shape[1] of arguments: %s" % str(shapes))
+    else:
+      total_arg_size += shape[1]
+  '''    
+
   dtype = [a.dtype for a in args][0]
 
   # Now the computation.
