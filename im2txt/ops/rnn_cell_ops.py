@@ -382,13 +382,13 @@ class BasicLSTMCell(RNNCell):
         # e_ti =array_ops.zeros([batch_size,subfeature_num])
  
         W1_matrix=tf.expand_dims(W1,0) #[1,state_length+subfeature_length,mid_layer_size]
-        W1_matrix=tf.tile(W1_matrix,[batch_size,1,1]) #[batchsize,state_length+subfeature_length,mid_layer_size]
+        W1_matrix=tf.tile(W1_matrix,tf.pack([tensorShape[0],1,1])) #[batchsize,state_length+subfeature_length,mid_layer_size]
         W2_matrix=tf.expand_dims(W2,0)
-        W2_matrix=tf.tile(W2_matrix,[batch_size,1,1])
+        W2_matrix=tf.tile(W2_matrix,tf.pack([tensorShape[0],1,1]))
         b1_matrix=tf.expand_dims(b1,0) #[1,1,mid_layer_size]     
-        b1_matrix=tf.tile(b1_matrix,[batch_size,1,1])
+        b1_matrix=tf.tile(b1_matrix,tf.pack([tensorShape[0],1,1]))
         b2_matrix=tf.expand_dims(b2,0) #[1,1,mid_layer_size]     
-        b2_matrix=tf.tile(b2_matrix,[batch_size,1,1])
+        b2_matrix=tf.tile(b2_matrix,tf.pack([tensorShape[0],1,1]))
 
         h_matrix=tf.expand_dims(h,1) # [batchsize,1,state_length]
         h_matrix=tf.tile(h_matrix,[1,subfeature_num,1]) #[batchsize,subfeature_num,state_length]
