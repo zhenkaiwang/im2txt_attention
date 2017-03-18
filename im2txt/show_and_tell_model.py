@@ -390,8 +390,8 @@ class ShowAndTellModel(object):
       if self.mode == 'train':
       	_, initial_state = lstm_cell(self.image_embeddings, zero_state)
       else:
-      	_, initial_state,_,_,_ = lstm_cell(self.image_embeddings, zero_state)
-
+      	_, initial_state,_,_,image_embedding_print = lstm_cell(self.image_embeddings, zero_state)
+        image_embedding_print=tf.identity(image_embedding_print, name="image_embedding_print")
       
 
       # Allow the LSTM variables to be reused.

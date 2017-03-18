@@ -37,9 +37,9 @@ class InferenceWrapper(inference_wrapper_base.InferenceWrapperBase):
     return model
 
   def feed_image(self, sess, encoded_image):
-    initial_state,image_embedding = sess.run(fetches=["lstm/initial_state:0","lstm/word_imbeddings:0"],
+    initial_state,image_embedding = sess.run(fetches=["lstm/initial_state:0","lstm/image_embedding_print:0"],
                              feed_dict={"image_feed:0": encoded_image})
-    print("image embeddings")
+    print("image embedding")
     print(image_embedding)
     return initial_state
 
