@@ -339,7 +339,8 @@ class ShowAndTellModel(object):
       print("image_sub_tile")
       print(image_sub_tile)
     else:
-      image_sub_reshaped=tf.reshape(self.image_sub_features,[self.config.batch_size,1,-1])
+      #image_sub_reshaped=tf.reshape(self.image_sub_features,[self.config.batch_size,1,-1])
+      image_sub_reshaped=tf.reshape(self.image_sub_features,tf.pack([shape_seq[0],1,-1]))
       image_sub_tile=tf.tile(image_sub_reshaped,tf.pack([1,shape_seq[1],1]))
     
     output=tf.concat(2,[self.seq_embeddings,image_sub_tile])
