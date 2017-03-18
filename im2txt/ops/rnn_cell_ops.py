@@ -1017,7 +1017,7 @@ def _linear(args, output_size, bias, bias_start=0.0, scope=None):
     #else:
       #total_arg_size += shape[1]
     #print("shape[1]")
-    #print(shape[1])
+    print(shape)
     total_arg_size += shape[1]
   #print("total_arg_size")
   #print(total_arg_size)
