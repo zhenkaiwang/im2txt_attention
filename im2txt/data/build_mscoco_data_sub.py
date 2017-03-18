@@ -430,9 +430,12 @@ def _load_and_process_metadata(captions_file, image_dir):
   num_captions = 0
   for image_id, base_filename in id_to_filename:
     filename = os.path.join(image_dir, base_filename)
-    captions = [_process_caption(c) for c in id_to_captions[image_id]]
-    image_metadata.append(ImageMetadata(image_id, filename, captions))
-    num_captions += len(captions)
+    if(os.path.isfile(filename)):
+      captions = [_process_caption(c) for c in id_to_captions[image_id]]
+      image_metadata.append(ImageMetadata(image_id, filename, captions))
+      num_captions += len(captions)
+    else:
+      print("%s not existed" % (filename))
   print("Finished processing %d captions for %d images in %s" %
         (num_captions, len(id_to_filename), captions_file))
 
@@ -468,8 +471,8 @@ def main(unused_argv):
   val_cutoff = int(0.90 * len(mscoco_val_dataset))
   # train_dataset = mscoco_train_dataset + mscoco_val_dataset[0:train_cutoff]
   train_dataset = mscoco_train_dataset
-  val_dataset = mscoco_val_dataset[train_cutoff:val_cutoff]
-  test_dataset = mscoco_val_dataset[val_cutoff:]
+  # val_dataset = mscoco_val_dataset[train_cutoff:val_cutoff]
+  # test_dataset = mscoco_val_dataset[val_cutoff:]
 
   # Create vocabulary from the training captions.
   train_captions = [c for image in train_dataset for c in image.captions]

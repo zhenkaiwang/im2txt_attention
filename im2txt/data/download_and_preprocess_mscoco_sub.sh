@@ -36,8 +36,9 @@ else
 fi
 
 # Create the output directories.
-OUTPUT_DIR="${1%/}"
-SCRATCH_DIR="${OUTPUT_DIR}/raw-data"
+# OUTPUT_DIR="${1%/}"
+OUTPUT_DIR="/home/superNLP/usb_hdd/cocodata/sub"
+SCRATCH_DIR="/home/superNLP/usb_hdd/cocodata/raw-data"
 mkdir -p "${OUTPUT_DIR}"
 mkdir -p "${SCRATCH_DIR}"
 CURRENT_DIR=$(pwd)
@@ -65,7 +66,7 @@ BASE_IMAGE_URL="http://msvocds.blob.core.windows.net/coco2014"
 
 TRAIN_IMAGE_FILE="train2014.zip"
 #download_and_unzip ${BASE_IMAGE_URL} ${TRAIN_IMAGE_FILE}
-TRAIN_IMAGE_DIR="${SCRATCH_DIR}/pic100"
+TRAIN_IMAGE_DIR="/home/superNLP/usb_hdd/cocodata/raw-data/pic100"
 
 VAL_IMAGE_FILE="val2014.zip"
 # download_and_unzip ${BASE_IMAGE_URL} ${VAL_IMAGE_FILE}
@@ -82,11 +83,11 @@ VAL_CAPTIONS_FILE="${SCRATCH_DIR}/annotations/captions_val2014.json"
 
 # Build TFRecords of the image data.
 cd "${CURRENT_DIR}"
-BUILD_SCRIPT="${WORK_DIR}/build_mscoco_data"
+BUILD_SCRIPT="${WORK_DIR}/build_mscoco_data_sub"
 "${BUILD_SCRIPT}" \
   --train_image_dir="${TRAIN_IMAGE_DIR}" \
   --val_image_dir="${VAL_IMAGE_DIR}" \
   --train_captions_file="${TRAIN_CAPTIONS_FILE}" \
   --val_captions_file="${VAL_CAPTIONS_FILE}" \
-  --output_dir="${OUTPUT_DIR}/sub" \
-  --word_counts_output_file="${OUTPUT_DIR}/sub/word_counts.txt" \
+  --output_dir="${OUTPUT_DIR}" \
+  --word_counts_output_file="${OUTPUT_DIR}/word_counts.txt" \
