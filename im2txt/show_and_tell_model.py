@@ -430,7 +430,7 @@ class ShowAndTellModel(object):
         # inputs_wa = self.get_inputs()
 
         sequence_length = tf.reduce_sum(self.input_mask, 1)
-        lstm_outputs, _ , _ , _ , _ = tf.nn.dynamic_rnn(cell=lstm_cell,
+        lstm_outputs, _ = tf.nn.dynamic_rnn(cell=lstm_cell,
                           inputs=self.inputs_wa,
                           sequence_length=sequence_length,
                           initial_state=initial_state,
