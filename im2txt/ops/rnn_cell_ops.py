@@ -1026,7 +1026,7 @@ def _linear(args, output_size, bias, bias_start=0.0, scope=None):
   # Now the computation.
   with vs.variable_scope(scope or "Linear"):
     matrix = vs.get_variable(
-         "Matrix", [total_arg_size, output_size], dtype=dtype,validate_shape=False)
+         "Matrix", [tf.to_int32(total_arg_size), output_size], dtype=dtype,validate_shape=False)
         #"Matrix", [total_arg_size, output_size], dtype=dtype)
     if len(args) == 1:
       res = math_ops.matmul(args[0], matrix)
