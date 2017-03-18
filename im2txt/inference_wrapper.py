@@ -49,6 +49,7 @@ class InferenceWrapper(inference_wrapper_base.InferenceWrapperBase):
             "lstm/state_feed:0": state_feed,
             "image_feed:0": encoded_image
         })
+    '''
     print("print lstm inner variables!")
     print("alpha_ti")
     print(alpha_ti)
@@ -58,4 +59,5 @@ class InferenceWrapper(inference_wrapper_base.InferenceWrapperBase):
     print(z_i)
     print("word_imbeddings")
     print(word_imbeddings)
+    '''
     return softmax_output, state_output, None
