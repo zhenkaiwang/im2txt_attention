@@ -345,8 +345,9 @@ class BasicLSTMCell(RNNCell):
       #batch_size_ops
       # batch_size=32
       tensorShape=tf.shape(inputs)
-      z_i = array_ops.zeros([batch_size,subfeature_length])
-      # z_i=array_ops.zeros(tf.pack([tensorShape[0],tensorShape[1]]))
+      #z_i = array_ops.zeros([batch_size,subfeature_length])
+
+      z_i=array_ops.zeros(tf.pack([tensorShape[0],subfeature_length]))
       print('inputs:')
       print(inputs)
       # print("Initial z_i:")
