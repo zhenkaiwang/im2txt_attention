@@ -37,8 +37,10 @@ class InferenceWrapper(inference_wrapper_base.InferenceWrapperBase):
     return model
 
   def feed_image(self, sess, encoded_image):
-    initial_state = sess.run(fetches="lstm/initial_state:0",
+    initial_state,image_embedding = sess.run(fetches=["lstm/initial_state:0","lstm/word_imbeddings:0"],
                              feed_dict={"image_feed:0": encoded_image})
+    print("image embeddings")
+    print(image_embedding)
     return initial_state
 
   def inference_step(self, sess, input_feed, state_feed,encoded_image):
@@ -53,9 +55,9 @@ class InferenceWrapper(inference_wrapper_base.InferenceWrapperBase):
     print("print lstm inner variables!")
     print("state_out_put")
     print(state_output)
-    '''
     print("alpha_ti")
     print(alpha_ti)
+    '''
     print("alpha_ti_diff")
     print(alpha_ti_diff)
     print("z_i")
