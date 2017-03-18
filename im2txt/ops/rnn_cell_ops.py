@@ -1005,7 +1005,7 @@ def _linear(args, output_size, bias, bias_start=0.0, scope=None):
 
   # Calculate the total size of arguments on dimension 1.
   #total_arg_size = 0
-  total_arg_size = []
+  total_arg_size = [0]
   #shapes = [a.get_shape().as_list() for a in args]
   shapes = [tf.shape(a) for a in args]
 
