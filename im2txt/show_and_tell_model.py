@@ -384,7 +384,12 @@ class ShowAndTellModel(object):
       # Feed the image embeddings to set the initial LSTM state.
       zero_state = lstm_cell.zero_state(
         batch_size=self.image_embeddings.get_shape()[0], dtype=tf.float32)
-      _, initial_state = lstm_cell(self.image_embeddings, zero_state)
+      if self.mode == 'train':
+      	_, initial_state = lstm_cell(self.image_embeddings, zero_state)
+      else:
+      	_, initial_state,_,_,_ = lstm_cell(self.image_embeddings, zero_state)
+
+      
 
       # Allow the LSTM variables to be reused.
       lstm_scope.reuse_variables()
