@@ -52,11 +52,11 @@ class InferenceWrapper(inference_wrapper_base.InferenceWrapperBase):
             "image_feed:0": encoded_image
         })
     
-    print("print lstm inner variables!")
-    print("state_out_put")
-    print(state_output)
-    print("alpha_ti")
-    print(alpha_ti)
+    # print("print lstm inner variables!")
+    # print("state_out_put")
+    # print(state_output)
+    # print("alpha_ti")
+    # print(alpha_ti)
     '''
     print("alpha_ti_diff")
     print(alpha_ti_diff)
