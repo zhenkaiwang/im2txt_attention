@@ -68,9 +68,9 @@ def main(_):
 
     print("going to print!")  
     #varaibelDic_file = open(varaibelDic_dir,"w")
-    variables_names = [v.name for v in tf.trainable_variables()]
-    values = sess.run(variables_names)
-    varaiableDic = {}
+    # variables_names = [v.name for v in tf.trainable_variables()]
+    # values = sess.run(variables_names)
+    # varaiableDic = {}
     for k,v in zip(variables_names,values):
       print(k,v)
       #print(tf.nn.l2_loss(v))
