@@ -185,7 +185,8 @@ def inception_v3(images,
           normalizer_params=batch_norm_params):
         net, end_points = inception_v3_base(images, final_endpoint=layer,scope=scope)
         # net2, end_points = inception_v3_base(images, final_endpoint="Conv2d_4a_3x3",scope=scope)
-        net2=end_points["MaxPool_5a_3x3"]
+        # net2=end_points["MaxPool_5a_3x3"]
+        net2=end_points["mixed_3"]
         shape2 = net2.get_shape()
         net2 = tf.reshape(net2, [shape2[0].value, -1, shape2[3].value])
         print("sub_feature_shape")
