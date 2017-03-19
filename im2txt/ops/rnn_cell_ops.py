@@ -339,9 +339,11 @@ class BasicLSTMCell(RNNCell):
       # print("single_input_length ")
       # print(single_input_length)
       word_imbedding_length = 512
-      subfeature_length = 192#(single_input_length-word_imbedding_length)/subfeature_num;
+      #subfeature_length = 192#(single_input_length-word_imbedding_length)/subfeature_num;
+      subfeature_length = 768
       # subfeature_num = int((single_input_length-word_imbedding_length)/subfeature_length)
-      subfeature_num = 35*35
+      # subfeature_num = 35*35
+      subfeature_num = 17*17
       #batch_size_ops
       # batch_size=32
       tensorShape=tf.shape(inputs)
@@ -1024,7 +1026,8 @@ def _linear(args, output_size, bias, bias_start=0.0, scope=None):
   # Now the computation.
   with vs.variable_scope(scope or "Linear"):
     matrix = vs.get_variable(
-         "Matrix", [512+192+512, output_size], dtype=dtype)
+         "Matrix", [512+512+768, output_size], dtype=dtype)
+        # "Matrix", [512+192+512, output_size], dtype=dtype)
         # "Matrix", [total_arg_size, output_size], dtype=dtype)
         #"Matrix", [total_arg_size, output_size], dtype=dtype)
     if len(args) == 1:
