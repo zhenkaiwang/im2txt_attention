@@ -49,7 +49,7 @@ def main(_):
     restore_fn = model.build_graph_from_config(configuration.ModelConfig(),
                                                FLAGS.checkpoint_path)
   g.finalize()
-  img_dir=FLAGS.img_dir+'/'
+  img_dir=FLAGS.image_dir+'/'
   validateGlobal=FLAGS.validateGlobal
 
   # Create the vocabulary.
