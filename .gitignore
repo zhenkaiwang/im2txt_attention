@@ -10,3 +10,4 @@
 /.svn
 *.json
 *.ckpt
+val2014scores.txt
