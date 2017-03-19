@@ -1,0 +1,119 @@
+loading annotations into memory...
+loading annotations into memory...
+loading annotations into memory...
+loading annotations into memory...
+loading annotations into memory...
+0:00:03.109469
+creating index...
+index created!
+Loading and preparing results...     
+loading annotations into memory...
+0:00:00.697220
+creating index...
+index created!
+Loading and preparing results...     
+loading annotations into memory...
+0:00:00.721420
+creating index...
+index created!
+Loading and preparing results...     
+loading annotations into memory...
+0:00:00.705162
+creating index...
+index created!
+Loading and preparing results...     
+loading annotations into memory...
+0:00:00.701549
+creating index...
+index created!
+Loading and preparing results...     
+DONE (t=0.03s)
+creating index...
+index created!
+tokenization...
+setting up scorers...
+computing Bleu score...
+{'reflen': 851, 'guess': [0, 0, 0, 0], 'testlen': 0, 'correct': [0, 0, 0, 0]}
+ratio: 1.17508813161e-18
+Bleu_1: 0.000
+Bleu_2: 0.000
+Bleu_3: 0.000
+Bleu_4: 0.000
+computing METEOR score...
+METEOR: 0.000
+computing Rouge score...
+ROUGE_L: 0.000
+computing CIDEr score...
+CIDEr: 0.000
+loading annotations into memory...
+0:00:00.694328
+creating index...
+index created!
+Loading and preparing results...     
+DONE (t=0.03s)
+creating index...
+index created!
+tokenization...
+setting up scorers...
+computing Bleu score...
+{'reflen': 851, 'guess': [0, 0, 0, 0], 'testlen': 0, 'correct': [0, 0, 0, 0]}
+ratio: 1.17508813161e-18
+Bleu_1: 0.000
+Bleu_2: 0.000
+Bleu_3: 0.000
+Bleu_4: 0.000
+computing METEOR score...
+METEOR: 0.000
+computing Rouge score...
+ROUGE_L: 0.000
+computing CIDEr score...
+CIDEr: 0.000
+Train Step at 5000
+
+bla
+Train Step at ${TRAIN_STEP}
+
+bla
+Train Step at 5000 
+
+bla
+The counter is 0 
+
+The counter is 1 
+
+The counter is 2 
+
+The counter is 3 
+
+The counter is 4 
+
+The counter is 5 
+
+The counter is 6 
+
+The counter is 7 
+
+The counter is 8 
+
+The counter is 9 
+
+The counter is 0 
+
+The counter is 5000 
+
+The counter is 10000 
+
+The counter is 15000 
+
+The counter is 20000 
+
+The counter is 25000 
+
+The counter is 30000 
+
+The counter is 35000 
+
+The counter is 40000 
+
+The counter is 45000 
+
