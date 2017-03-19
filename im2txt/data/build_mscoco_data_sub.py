@@ -125,7 +125,7 @@ tf.flags.DEFINE_string("end_word", "</S>",
                        "Special word added to the end of each sentence.")
 tf.flags.DEFINE_string("unknown_word", "<UNK>",
                        "Special word meaning 'unknown'.")
-tf.flags.DEFINE_integer("min_word_count", 4,
+tf.flags.DEFINE_integer("min_word_count", 0,
                         "The minimum number of occurrences of each word in the "
                         "training set for inclusion in the vocabulary.")
 tf.flags.DEFINE_string("word_counts_output_file", "/tmp/word_counts.txt",
