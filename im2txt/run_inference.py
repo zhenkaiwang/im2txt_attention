@@ -27,11 +27,19 @@ tf.flags.DEFINE_string("vocab_file", "", "Text file containing the vocabulary.")
 tf.flags.DEFINE_string("input_files", "",
                        "File pattern or comma-separated list of file patterns "
                        "of image files.")
+tf.flags.DEFINE_string("img_dir", "",
+                       "Directory of"
+                       "of image files.")
+tf.flags.DEFINE_boolean("validateGlobal", True,
+                       "If validate global"
+                       "image files.")
 
-img_dir = '/home/superNLP/usb_hdd/cocodata/raw-data/pic100/'
+# img_dir = '/home/superNLP/usb_hdd/cocodata/raw-data/pic100/'
 dict_dir = '/home/superNLP/usb_hdd/cocodata/raw-data/annotations/captions_val2014_filename_id.json'
-output_dir = 'captions_pic100_showandtell_results.json'
-varaibelDic_dir = 'variableDic46250.json'
+output_dir = '/home/superNLP/coco-caption/results/captions_val2014_showandtell_results.json'
+# output_dir = 'captions_pic100_showandtell_results.json'
+# varaibelDic_dir = 'variableDic46250.json'
+numOfImage=100;
 
 def main(_):
   # Build the inference graph.
@@ -41,6 +49,8 @@ def main(_):
     restore_fn = model.build_graph_from_config(configuration.ModelConfig(),
                                                FLAGS.checkpoint_path)
   g.finalize()
+  img_dir=FLAGS.img_dir+'/'
+  validateGlobal=FLAGS.validateGlobal
 
   # Create the vocabulary.
   vocab = vocabulary.Vocabulary(FLAGS.vocab_file)
@@ -83,9 +93,9 @@ def main(_):
     for filename in os.listdir(img_dir):
       #filename="COCO_val2014_000000320612.jpg"
       print(img_dir+filename, 'filepath')
-      print(num)
+      # print(num)
       num += 1
-      if num>10:
+      if num>numOfImage:
           break
       if(filename != '.' and filename != '..'):
           #filename="/home/superNLP/usb_hdd/cocodata/"
@@ -106,12 +116,14 @@ def main(_):
             sentence = " ".join(sentence)
             print('caption predicted:', sentence)
             #print("  %d) %s (p=%f)" % (i, sentence, math.exp(caption.logprob)))
-            #temp = {}
-            #temp["image_id"] = dict_data[filename]
-            #temp["caption"] = sentence[0:len(sentence)-2]
-            #imgId_cap.append(temp)
+            if validateGlobal:
+              temp = {}
+              temp["image_id"] = dict_data[filename]
+              temp["caption"] = sentence[0:len(sentence)-2]
+              imgId_cap.append(temp)
             break
-    #output_file.write(json.dumps(imgId_cap))
+    if validateGlobal:
+      output_file.write(json.dumps(imgId_cap))
     #file_writer.add_graph(sess.graph)
     #file_writer.close()
 if __name__ == "__main__":
