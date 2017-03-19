@@ -27,7 +27,7 @@ tf.flags.DEFINE_string("vocab_file", "", "Text file containing the vocabulary.")
 tf.flags.DEFINE_string("input_files", "",
                        "File pattern or comma-separated list of file patterns "
                        "of image files.")
-tf.flags.DEFINE_string("img_dir", "",
+tf.flags.DEFINE_string("image_dir", "",
                        "Directory of"
                        "of image files.")
 tf.flags.DEFINE_boolean("validateGlobal", True,
