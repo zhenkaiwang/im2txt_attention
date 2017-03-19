@@ -19,7 +19,7 @@ First ensure that you have installed the following required packages:
 To train the model you will need to provide training data in native TFRecord
 format. The TFRecord format consists of a set of sharded files containing
 serialized `tf.SequenceExample` protocol buffers. Each `tf.SequenceExample`
-proto contains an image (JPEG format), a caption and metadata such as the image
+proto contains an image (JPEG or PNG format), a caption and metadata such as the image
 id.
 
 Each caption is a list of words. During preprocessing, a dictionary is created
