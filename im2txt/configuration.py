@@ -93,7 +93,7 @@ class TrainingConfig(object):
 
     # Learning rate for the initial phase of training.
     #self.initial_learning_rate = 2.0
-    self.initial_learning_rate = 0.05
+    self.initial_learning_rate = 0.005
     self.learning_rate_decay_factor = 0.5
     self.num_epochs_per_decay = 8.0
 
