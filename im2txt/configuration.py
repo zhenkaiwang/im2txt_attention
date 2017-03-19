@@ -88,7 +88,8 @@ class TrainingConfig(object):
     self.num_examples_per_epoch = 586363
 
     # Optimizer for training the model.
-    self.optimizer = "SGD"
+    # self.optimizer = "SGD"
+    self.optimizer = "Adam"
 
     # Learning rate for the initial phase of training.
     #self.initial_learning_rate = 2.0
