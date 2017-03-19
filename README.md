@@ -3,8 +3,6 @@
 A TensorFlow implementation of the image caption generator using CNN, attention and LSTM. Codes are modified based on Google [im2txt](https://github.com/tensorflow/models/tree/master/im2txt) *Show and Tell* model.
 
 ## Contact
-Original Author: Chris Shallue (shallue@google.com)
-
 Authors: Xiaobai Ma (maxiaoba@stanford.edu), Zhenkai Wang (zackwang@stanford.edu), Zhi Bie (zhib@stanford.edu)
 
 ## Getting Started
