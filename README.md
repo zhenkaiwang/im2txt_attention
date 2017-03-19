@@ -1,6 +1,10 @@
 # CNN-Attention-LSTM Image Caption Generator
 
-A TensorFlow implementation of the image caption generator using CNN, attention and LSTM, based on Google [im2txt](https://github.com/tensorflow/models/tree/master/im2txt) model.
+A TensorFlow implementation of the image caption generator using CNN, attention and LSTM, based on Google [im2txt](https://github.com/tensorflow/models/tree/master/im2txt) *Show and Tell* model.
+
+## Contact
+Original Author: Chris Shallue (shallue@google.com)
+Authors: Xiaobai Ma (maxiaoba@stanford.edu), Zhenkai Wang (zackwang@stanford.edu), Zhi Bie (zhib@stanford.edu)
 
 ## Getting Started
 
@@ -45,8 +49,7 @@ bazel build im2txt/download_and_preprocess_mscoco
 bazel-bin/im2txt/download_and_preprocess_mscoco "${MSCOCO_DIR}"
 ```
 
-To only build some subset of the mscoco data:
-Modify your path variables in PathDefine_test.bash, then:
+To only build some subset of the mscoco data, first modify your path variables in PathDefine_test.bash, then:
 ```shell
 source PathDefine_test.bash
 
@@ -56,16 +59,6 @@ bazel build im2txt/download_and_preprocess_mscoco_sub
 # Run the preprocessing script.
 bazel-bin/im2txt/download_and_preprocess_mscoco_sub "${MSCOCO_DIR}"
 ```
-
-The final line of the output should read:
-
-```
-2016-09-01 16:47:47.296630: Finished processing all 20267 image-caption pairs in data set 'test'.
-```
-
-When the script finishes you will find 256 training, 4 validation and 8 testing
-files in `DATA_DIR`. The files will match the patterns `train-?????-of-00256`,
-`val-?????-of-00004` and `test-?????-of-00008`, respectively.
 
 ### Download the Inception v3 Checkpoint
 
@@ -96,7 +89,7 @@ rm "inception_v3_2016_08_28.tar.gz"
 Run the training script.
 
 ```shell
-#source PathDefine.bash or PathDefine_test.sh if not done
+#source PathDefine.bash or PathDefine_test.bash (for subset) if not done
 # Build the model.
 bazel build -c opt im2txt/...
 
@@ -115,7 +108,7 @@ Your trained model can generate captions for any JPEG or PNG image. The
 following command line will generate captions for an image from the test set.
 
 ```shell
-#source PathDefine.bash or PathDefine_test.sh if not done
+#source PathDefine.bash or PathDefine_test.bash (for subset) if not done
 
 # Build the inference binary.
 bazel build -c opt im2txt/run_inference
