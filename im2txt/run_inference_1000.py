@@ -36,10 +36,10 @@ tf.flags.DEFINE_boolean("validateGlobal", True,
 
 # img_dir = '/home/superNLP/usb_hdd/cocodata/raw-data/pic100/'
 dict_dir = '/home/superNLP/usb_hdd/cocodata/raw-data/annotations/captions_val2014_filename_id.json'
-output_dir = '/home/superNLP/coco-caption/results/captions_val2014_showandtell_results.json'
+output_dir = '/home/superNLP/coco-caption/results/captions_val20141000_showandtell_results.json'
 # output_dir = 'captions_pic100_showandtell_results.json'
 # varaibelDic_dir = 'variableDic46250.json'
-numOfImage=100;
+numOfImage=5000;
 
 def main(_):
   # Build the inference graph.
@@ -93,10 +93,10 @@ def main(_):
     for filename in os.listdir(img_dir):
       #filename="COCO_val2014_000000320612.jpg"
       print(img_dir+filename, 'filepath')
-      # print(num)
-      #num += 1
-      #if num>numOfImage:
-      #    break
+      print(num)
+      num += 1
+      if num>numOfImage:
+          break
       if(filename != '.' and filename != '..'):
           #filename="/home/superNLP/usb_hdd/cocodata/"
           with tf.gfile.GFile(img_dir+filename, "r") as f:
